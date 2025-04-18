@@ -4,12 +4,15 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  standalone: false
+standalone: false
 })
 export class HeaderComponent  implements OnInit {
 
   constructor() { }
 
   ngOnInit() {}
+  openMenu() {
+    
+  }
 
 }

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-categorias',
   templateUrl: './categorias.page.html',
   styleUrls: ['./categorias.page.scss'],
+  standalone: false
 })
 export class CategoriasPage implements OnInit {
 

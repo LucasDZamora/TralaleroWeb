@@ -1,5 +1,7 @@
 {
-  "name": "ionic-app-base",
-  "integrations": {},
+  "name": "TraleroWeb",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

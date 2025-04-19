@@ -1,3 +1,43 @@
 <ion-content [fullscreen]="true">
-  a
-</ion-content>
+  <!-- Título Novedades -->
+  <div class="section-title">
+    <h1 class="modern-title">NOVEDADES</h1>
+  </div>
+
+  <!-- Contenedor de productos con scroll -->
+  <div class="products-container">
+    <div class="products-scroll">
+      <div class="product-card" *ngFor="let product of products">
+        <div class="badges">
+          <span class="new-badge" *ngIf="product.isNew">NEW</span>
+          <span class="discount-badge" *ngIf="product.discount > 0">-{{product.discount}}%</span>
+        </div>
+        <img [src]="getProductImage()" alt="{{product.name}}" class="product-image">
+        <div class="stars">★★★★★</div>
+        <h3>{{product.name}}</h3>
+        <div class="prices">
+          <span class="old-price" *ngIf="product.oldPrice">${{product.oldPrice | number:'1.2-2'}}</span>
+          <span class="new-price">${{product.price | number:'1.2-2'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indicador de scroll -->
+  <div class="scroll-hint">
+    <ion-icon name="arrow-forward-outline"></ion-icon>
+  </div>
+
+  <!-- Banner OFERTAS -->
+  <div class="ofertas-banner">
+    <h2 class="ofertas-title">OFERTAS</h2>
+  </div>
+
+  <!-- Sección de descuentos -->
+  <div class="discounts-section">
+    <div class="discount-banner" *ngFor="let discount of discounts">
+      <h2>HASTA {{discount.amount}}% DE DESCUENTO</h2>
+      <p>SUPER OFERTA</p>
+      <ion-button fill="outline">Ver ahora</ion-button>
+    </div>
+  </div>

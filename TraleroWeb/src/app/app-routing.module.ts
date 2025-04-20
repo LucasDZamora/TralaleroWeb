@@ -6,12 +6,6 @@ import { CategoriasPage } from './pages/categorias/categorias.page';
 import { TiendasPage } from './pages/tiendas/tiendas.page';
 
 const routes: Routes = [
-  
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)

@@ -13,8 +13,7 @@ import { TiendasPage } from './tiendas.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    TiendasPageRoutingModule
+    TiendasPageRoutingModule,
   ],
-  declarations: [TiendasPage]
 })
 export class TiendasPageModule {}

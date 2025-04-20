@@ -8,15 +8,6 @@ import { TiendasPage } from './pages/tiendas/tiendas.page';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.page').then( m => m.HomePage)
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {

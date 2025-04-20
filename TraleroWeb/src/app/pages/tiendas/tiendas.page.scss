@@ -1,0 +1,82 @@
+:host {
+    ion-content {
+      --background: #ffffff; // fondo blanco para todo el contenido
+    }
+  }
+  
+  .tienda-nombre {
+    color: black;
+  }
+  
+  .tienda-resenas {
+    color: black;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: row;
+    background: white;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    padding: 16px;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .left {
+    flex: 1;
+  }
+  
+  .image {
+    width: 100px;
+    margin: 0 16px;
+  }
+  
+  .image img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+  
+  .categorias {
+    flex: 1;
+    font-size: 14px;
+    color: #000000;
+  }
+  
+  .estrella {
+    color: #f6c343;
+    font-size: 18px;
+    margin-right: 2px;
+  }
+  
+  .paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: rgb(0, 0, 0);
+  }
+  
+  .paginacion button {
+    background: none;
+    border: 1px solid #000;
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+  }
+  
+  .paginacion button.active {
+    background: black;
+    color: rgb(255, 255, 255);
+  }
+  

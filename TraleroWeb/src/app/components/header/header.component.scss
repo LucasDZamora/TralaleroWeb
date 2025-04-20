@@ -1,0 +1,50 @@
+.custom-header {
+    .logo-img {
+        height: 40px;
+        margin-right: 10px;
+    }
+
+    ion-searchbar {
+        --background: #e4e4e4;
+        --border-radius: 10px;
+        --placeholder-color: #666;
+        --color: black;
+        --icon-color: #666;
+        max-width: 590px;
+        height: 40px;
+        margin: 0 20px;
+    }
+
+    .nav-buttons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        ion-button.nav-btn {
+            --background: #F5F5F5;
+            --color: black;
+            --border-radius: 10px;
+            font-size: 14px;
+            text-transform: none;
+            min-width: 110px;
+        }
+
+        ion-button.login-btn {
+            --background: #E3E3E3;
+            --color: black;
+            --border-radius: 10px; 
+            font-size: 14px;
+            text-transform: none;
+            min-width: 110px;
+        }   
+
+        ion-button.register-btn {
+            --background: #2C2C2C;
+            --color: white;
+            --border-radius: 10px;
+            font-size: 14px;
+            text-transform: none;
+            min-width: 110px;
+        }
+    }
+}

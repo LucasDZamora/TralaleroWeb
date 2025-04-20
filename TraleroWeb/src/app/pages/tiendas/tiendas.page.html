@@ -21,17 +21,20 @@
           </ion-card-header>
 
           <ion-card-content>
+            <!-- Estrellas -->
             <div class="ion-text-start stars ion-margin-bottom">
               <ng-container *ngIf="tienda.estrellas > 0; else sinEstrellas">
-                <ion-icon *ngFor="let star of [].constructor(tienda.estrellas)" name="star" class="estrella"></ion-icon>
+                <ion-icon *ngFor="let star of [].constructor(tienda.estrellas)" name="star" class="estrella" aria-label="Estrella llena"></ion-icon>
               </ng-container>
               <ng-template #sinEstrellas>
-                <ion-icon *ngFor="let s of [].constructor(5)" name="star-outline" class="estrella"></ion-icon>
+                <ion-icon *ngFor="let s of [].constructor(5)" name="star-outline" class="estrella" aria-label="Estrella vacía"></ion-icon>
               </ng-template>
             </div>
 
+            <!-- Icono emoji -->
             <div class="ion-text-center emoji-tienda ion-margin-bottom">🏪</div>
 
+            <!-- Categorías -->
             <div class="categorias ion-text-center">
               <ion-chip *ngFor="let cat of tienda.categorias">
                 <ion-label>{{ cat }}</ion-label>

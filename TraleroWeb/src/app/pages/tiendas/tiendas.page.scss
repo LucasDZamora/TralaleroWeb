@@ -1,82 +1,97 @@
+/* tienda.page.scss */
 :host {
-    ion-content {
-      --background: #ffffff; // fondo blanco para todo el contenido
-    }
+    display: block;
+    background-color: #fff !important; /* Fuerza que el fondo sea blanco */
+    color: #000000; /* Color de texto más oscuro para buen contraste */
+    height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
   }
   
-  .tienda-nombre {
-    color: black;
+  html, body {
+    background-color: #fff !important; /* Fondo blanco global */
+    height: 100%; /* Asegura que ocupe toda la altura de la pantalla */
+    margin: 0; /* Elimina cualquier margen predeterminado */
   }
   
-  .tienda-resenas {
-    color: black;
+  ion-content {
+    background-color: #fff !important; /* Asegura que el fondo dentro de ion-content sea blanco */
   }
   
-  .grid {
+  .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 16px;
-    justify-content: center;
+    padding: 16px;
   }
   
   .card {
-    display: flex;
-    flex-direction: row;
-    background: white;
-    border: 1px solid #000000;
-    border-radius: 10px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
     padding: 16px;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); /* Sombra sutil */
+    transition: transform 0.3s ease; /* Efecto al pasar el mouse */
   }
   
-  .left {
-    flex: 1;
+  .card:hover {
+    transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
   }
   
-  .image {
-    width: 100px;
-    margin: 0 16px;
+  .card-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
   }
   
-  .image img {
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
+  ion-img {
+    width: 80px;
+    height: 80px;
+    background: #f0f0f0;
+    border-radius: 8px;
   }
   
-  .categorias {
-    flex: 1;
-    font-size: 14px;
-    color: #000000;
-  }
-  
-  .estrella {
-    color: #f6c343;
+  .info h2 {
+    margin: 0;
+    font-weight: bold;
     font-size: 18px;
-    margin-right: 2px;
   }
   
-  .paginacion {
+  .info p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #f7f7f7;
+  }
+  
+  .info ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+    font-size: 13px;
+  }
+  
+  .stars {
+    margin-bottom: 8px;
+    color: #ffc107;
+  }
+  
+  .pagination {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 24px;
-    gap: 8px;
-    flex-wrap: wrap;
-    color: rgb(0, 0, 0);
+    padding: 16px 0;
   }
   
-  .paginacion button {
-    background: none;
-    border: 1px solid #000;
-    border-radius: 6px;
-    padding: 4px 8px;
-    cursor: pointer;
+  .pagination ion-button {
+    margin: 0 4px;
   }
   
-  .paginacion button.active {
-    background: black;
-    color: rgb(255, 255, 255);
+  .pagination ion-button[disabled] {
+    opacity: 0.6;
+  }
+  
+  .dots {
+    font-size: 18px;
+    color: #f8f8f8;
+    margin: 0 10px;
   }
   

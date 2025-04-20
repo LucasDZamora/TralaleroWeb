@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-standalone: false
+  standalone: false
 })
-export class HeaderComponent  implements OnInit {
+export class HeaderComponent{
 
-  constructor() { }
+  @Input() placeholderText: string = 'Search'; 
+  @Output() searchEvent = new EventEmitter<string>(); 
 
-  ngOnInit() {}
-  openMenu() {
-    
+  searchText: string = ''; 
+
+  onSearch() {
+    this.searchEvent.emit(this.searchText); 
   }
-
 }

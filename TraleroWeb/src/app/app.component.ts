@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,14 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class AppComponent {
-  constructor() {}
+
+  placeholderText: string = 'Search';
+
+  constructor(private router: Router) {}
+
+  handleSearch(searchText: string) {
+    this.router.navigate(['/buscar-producto'], {
+      queryParams: { query: searchText }
+    });
+  }
 }

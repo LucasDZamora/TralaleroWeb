@@ -4,16 +4,19 @@
       <img src="../assets/icon/logo.png" class="logo-img" />
     </ion-buttons>
 
-    <ion-searchbar></ion-searchbar>
+    <ion-searchbar 
+    [(ngModel)]="searchText" 
+    [placeholder]="placeholderText" 
+    (keydown.enter)="onSearch()"
+  ></ion-searchbar>
 
     <ion-buttons slot="end" class="nav-buttons">
-      <ion-button routerLink="/inicio" class="nav-btn">Inicio</ion-button>
-      <ion-button routerLink="/ofertas" class="nav-btn">Ofertas</ion-button>
+      <ion-button routerLink="/home" class="nav-btn">Inicio</ion-button>
+      <ion-button class="nav-btn">Ofertas</ion-button>
       <ion-button routerLink="/categorias" class="nav-btn">Categorías</ion-button>
       <ion-button routerLink="/tiendas" class="nav-btn">Tiendas</ion-button>
-
-      <ion-button routerLink="/login" class="login-btn">Iniciar sesión</ion-button>
-      <ion-button routerLink="/register" class="register-btn">Registrarse</ion-button>
+      <ion-button class="login-btn">Iniciar sesión</ion-button>
+      <ion-button class="register-btn">Registrarse</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

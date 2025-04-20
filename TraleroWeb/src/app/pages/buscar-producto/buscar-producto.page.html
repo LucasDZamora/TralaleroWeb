@@ -1,13 +1,91 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>buscarProducto</ion-title>
+    <ion-title>Buscar Productos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">buscarProducto</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+    <!-- Ordenamiento -->
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="6" size-md="3">
+        <ion-item>
+          <ion-label>Ordenar por</ion-label>
+          <ion-select [(ngModel)]="orden" (ionChange)="ordenarProductos()">
+            <ion-select-option value="asc">Precio Ascendente</ion-select-option>
+            <ion-select-option value="desc">Precio Descendente</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <!-- Filtros -->
+      <ion-col size="12" size-md="3">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Filtros</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+
+            <!-- Categoría con Radio Buttons -->
+            <div class="radio-group">
+              <p><strong>Categoría</strong></p>
+              <ion-radio-group [(ngModel)]="filtro.categoria">
+                <ion-item>
+                  <ion-radio slot="start" value=""></ion-radio>
+                  <ion-label>Todas</ion-label>
+                </ion-item>
+                <ion-item *ngFor="let cat of categorias">
+                  <ion-radio slot="start" [value]="cat"></ion-radio>
+                  <ion-label>{{cat}}</ion-label>
+                </ion-item>
+              </ion-radio-group>
+            </div>
+
+
+            <!-- Rangos de Precio con Checkboxes -->
+            <div class="checkbox-group">
+              <p><strong>Rango de Precio</strong></p>
+              <ion-item *ngFor="let rango of rangosPrecio">
+                <ion-checkbox
+                  slot="start"
+                  [(ngModel)]="rango.seleccionado"
+                  (ionChange)="filtrar()"
+                ></ion-checkbox>
+                <ion-label>{{rango.min}} - {{rango.max}}</ion-label>
+              </ion-item>
+            </div>
+
+            <ion-button expand="block" (click)="filtrar()">Aplicar Filtros</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <!-- Productos -->
+      <ion-col size="12" size-md="9">
+        <ion-grid>
+          <ion-row>
+            <ion-col
+              size="12"
+              size-sm="6"
+              size-md="4"
+              *ngFor="let producto of productosFiltrados"
+            >
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-title>{{producto.nombre}}</ion-card-title>
+                  <ion-card-subtitle>{{producto.categoria}}</ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                  <p>{{producto.descripcion}}</p>
+                  <p><strong>${{producto.precio}}</strong></p>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

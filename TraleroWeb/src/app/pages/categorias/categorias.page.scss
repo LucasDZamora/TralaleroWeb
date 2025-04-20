@@ -1,0 +1,78 @@
+.categoria-card {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(113, 136, 146, 0.08);
+    background: #F5F7FF;
+    color: #000000; /* Asegura que el texto sea negro */
+    transition: transform 0.2s ease-in-out;
+  }
+
+  ion-card-title {
+    color: #2c2b2b; 
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  ion-card-content {
+    background-color: transparent;
+  }
+
+  ion-list {
+    background: transparent;
+  }
+
+  ion-item.subcategoria-item {
+    --background: transparent !important;
+    background: transparent !important;
+    --ion-item-background: transparent !important;
+    color: #2d2c2c;
+
+    ion-label {
+      color: #313131;
+    }
+
+    ion-icon {
+      color: #6b46c1;
+    }
+  }
+
+  .categoria-card:hover {
+    transform: translateY(-2px);
+  }
+  
+  .avatar-icon {
+    background: #e0d7f5;
+    color: #6b46c1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  ion-icon {
+    font-size: 20px;
+
+  }
+  
+  .mas-btn {
+    margin-top: 10px;
+    color: #6b46c1; /* Texto del botón "Más" */
+    font-weight: bold;
+  }
+
+  .sub-categoria {
+    border-bottom: 1px solid #dadada;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* Fondo general de la página */
+  :host {
+    --ion-background-color: #ffffff; /* Fondo blanco */
+    --ion-text-color: #1e1d1d; /* Texto negro */
+    background: var(--ion-background-color);
+    color: var(--ion-text-color);
+    
+    
+  }

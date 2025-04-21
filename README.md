@@ -1,5 +1,15 @@
 # Proyecto: Proyecto Aplicación Ionic + Angular
 
+## Integrantes
+
+- Patricio Figueroa  
+- Marcelo Flores  
+- Kavon Kermani  
+- Gabriel Sanzana  
+- Lucas Zamora  
+
+---
+
 ## Descripción
 
 Este proyecto es una página similar a Solotodo o Knasta, que permite visualizar el historial de precios de productos y notifica al usuario cuando el precio alcanza un mínimo histórico. 

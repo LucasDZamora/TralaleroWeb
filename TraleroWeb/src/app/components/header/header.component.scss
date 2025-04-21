@@ -20,23 +20,34 @@
         align-items: center;
         gap: 10px;
 
-        ion-button.nav-btn {
+        ion-button.nav-btn,
+        ion-button.login-btn,
+        ion-button.register-btn {
             --background: #F5F5F5;
             --color: black;
             --border-radius: 10px;
             font-size: 14px;
             text-transform: none;
             min-width: 110px;
+
+            &:hover,
+            &:focus {
+                --color: #7F57F1;
+            }
+
+            &::part(native) {
+                color: black;
+            }
+
+            &:hover::part(native),
+            &:focus::part(native) {
+                color: #7F57F1;
+            }
         }
 
         ion-button.login-btn {
             --background: #E3E3E3;
-            --color: black;
-            --border-radius: 10px; 
-            font-size: 14px;
-            text-transform: none;
-            min-width: 110px;
-        }   
+        }
 
         ion-button.register-btn {
             --background: #2C2C2C;
@@ -45,6 +56,20 @@
             font-size: 14px;
             text-transform: none;
             min-width: 110px;
+
+            &:hover,
+            &:focus {
+                --color: #7F57F1;
+            }
+
+            &::part(native) {
+                color: white;
+            }
+
+            &:hover::part(native),
+            &:focus::part(native) {
+                color: #7F57F1;
+            }
         }
     }
 }

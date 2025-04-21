@@ -1,8 +1,7 @@
 <ion-app>
-  <app-header 
-  [placeholderText]="placeholderText" 
-  (searchEvent)="handleSearch($event)"
-  ></app-header>
-  <ion-router-outlet></ion-router-outlet>
+  <app-header [placeholderText]="placeholderText" (searchEvent)="handleSearch($event)"></app-header>
+  <ion-content>
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
   <app-footer></app-footer>
 </ion-app>

@@ -1,66 +1,35 @@
-<ion-content [fullscreen]="true" style="--background: #f8f9fa">
-  <!-- Header fijo -->
-  <div style="background: white; padding: 16px; border-bottom: 1px solid #eee">
-    <ion-text color="primary">
-      <h1 style="margin: 0; font-size: 1.8rem; font-weight: bold">Price Compare</h1>
-    </ion-text>
-  </div>
+<ion-content [fullscreen]="true">
+  <ion-grid class="novedades-grid">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto" class="ion-text-center">
+        <h2 class="novedades-title">
+          NOVEDADES
+          <span class="decorative-line"></span>
+        </h2>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <!-- Título Novedades -->
-    <!-- Título Novedades -->
-    <ion-grid style="padding: 16px 0;">
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="auto" class="ion-text-center">
-          <h2 style="
-            margin: 0;
-            font-size: 2rem;
-            font-weight: 800;
-            color: #e91e63;
-            position: relative;
-            padding-bottom: 8px;
-          ">
-            NOVEDADES
-            <!-- línea decorativa -->
-            <span style="
-              content: '';
-              position: absolute;
-              bottom: 0;
-              left: 50%;
-              transform: translateX(-50%);
-              width: 60px;
-              height: 4px;
-              background: #e91e63;
-              border-radius: 2px;
-            "></span>
-          </h2>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  
-
-  <!-- Productos con scroll horizontal -->
-  <ion-grid style="padding: 16px">
-    <ion-row class="ion-nowrap" style="overflow-x: auto; padding: 16px 0">
-      <ion-col *ngFor="let product of products" style="min-width: 280px; max-width: 280px">
-        <ion-card style="margin: 0 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 12px">
-          <div style="position: relative">
-            <ion-badge *ngIf="product.isNew" color="danger" style="position: absolute; top: 10px; right: 10px; border-radius: 20px">
-              NEW
-            </ion-badge>
-            <ion-badge *ngIf="product.discount > 0" color="success" style="position: absolute; top: 40px; right: 10px; border-radius: 20px">
+  <ion-grid class="productos-grid">
+    <ion-row class="productos-row ion-nowrap">
+      <ion-col *ngFor="let product of products" class="producto-col">
+        <ion-card class="producto-card">
+          <div class="card-image-container">
+            <ion-badge *ngIf="product.isNew" color="danger" class="badge-new">NEW</ion-badge>
+            <ion-badge *ngIf="product.discount > 0" color="success" class="badge-discount">
               -{{product.discount}}%
             </ion-badge>
-            <img [src]="getProductImage()" style="height: 180px; object-fit: cover">
+            <img [src]="getProductImage()" class="producto-img" />
           </div>
 
           <ion-card-content>
-            <div style="color: #ffd700; font-size: 1.2rem">★★★★★</div>
-            <ion-label style="font-weight: 600; font-size: 1rem">{{product.name}}</ion-label>
-            <div style="display: flex; gap: 8px; align-items: center; margin-top: 12px">
-              <ion-text *ngIf="product.oldPrice" style="text-decoration: line-through; color: #999">
+            <div class="estrellas">★★★★★</div>
+            <ion-label class="producto-nombre">{{product.name}}</ion-label>
+            <div class="precio-container">
+              <ion-text *ngIf="product.oldPrice" class="precio-antiguo">
                 ${{product.oldPrice | number:'1.2-2'}}
               </ion-text>
-              <ion-text color="danger" style="font-weight: bold; font-size: 1.2rem">
+              <ion-text color="danger" class="precio-actual">
                 ${{product.price | number:'1.2-2'}}
               </ion-text>
             </div>
@@ -70,40 +39,18 @@
     </ion-row>
   </ion-grid>
 
-  <!-- Banner Ofertas -->
-  <ion-item lines="none" style="--background: linear-gradient(135deg, #e91e63 0%, #ff4081 100%); margin: 40px 0">
-    <ion-label class="ion-text-center" style="color: white">
-      <h1 style="font-size: 2.5rem; font-weight: 800; margin: 0">OFERTAS</h1>
-    </ion-label>
-  </ion-item>
+  <section class="descuentos-section">
+    <h2 class="descuentos-title">Descuentos</h2>
+  </section>
 
   <!-- Sección descuentos -->
-  <ion-list style="padding: 0 16px">
-    <ion-item *ngFor="let discount of discounts" lines="none" style="--background: white; border-left: 5px solid #e91e63; margin-bottom: 16px; border-radius: 8px">
+  <ion-list class="lista-descuentos">
+    <ion-item *ngFor="let discount of discounts" lines="none" class="item-descuento">
       <ion-label class="ion-text-center">
-        <h2 style="color: #e91e63; font-size: 1.5rem; font-weight: 700">HASTA {{discount.amount}}% DE DESCUENTO</h2>
-        <p style="color: #666; margin: 8px 0">SUPER OFERTA</p>
-        <ion-button fill="outline" style="--border-color: #e91e63; --color: #e91e63; --border-radius: 20px">
-          Ver ahora
-        </ion-button>
+        <h2>HASTA {{discount.amount}}% DE DESCUENTO</h2>
+        <p>SUPER OFERTA</p>
+        <ion-button fill="outline" class="btn-ver">Ver ahora</ion-button>
       </ion-label>
     </ion-item>
   </ion-list>
-
-  <!-- Footer -->
-  <ion-footer style="background: #333; color: white; padding: 24px">
-    <ion-grid>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="12" class="ion-text-center">
-          <h3 style="margin: 0">Price Compare S.A.</h3>
-          <p style="margin: 8px 0">A compare of prices</p>
-          <ion-buttons class="ion-justify-content-center" style="gap: 16px">
-            <ion-button fill="clear" style="--color: white">Home</ion-button>
-            <ion-button fill="clear" style="--color: white">Ads</ion-button>
-            <ion-button fill="clear" style="--color: white">Contact</ion-button>
-          </ion-buttons>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-footer>
 </ion-content>

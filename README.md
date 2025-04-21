@@ -73,19 +73,6 @@ Puedes ver los prototipos completos en [Figma](https://www.figma.com/design/27nv
 
 ---
 
-## Navegación
-
-La navegación está estructurada de manera simple, con **enlaces de navegación** accesibles desde cualquier página. Esto incluye:
-
-- **Home**: Página principal que se muestra al ingresar a la aplicación.
-- **Buscar**: Accesible desde la barra de búsqueda.
-- **Categorías**: Enlaces a distintas categorías de productos.
-- **Tiendas**: Muestra las tiendas para ver las reseñas de sus productos.
-
-La experiencia de usuario está diseñada para ser rápida y fácil, permitiendo al usuario acceder a cualquier página en cuestión de segundos.
-
----
-
 ## Instalación
 
 Para correr este proyecto en tu máquina local, sigue los siguientes pasos:

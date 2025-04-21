@@ -13,6 +13,14 @@ La página está compuesta por **4 secciones principales**:
 
 ---
 
+## Usuarios del sistema
+
+- **Usuario:** Puede buscar productos, ver el historial de precios, agregar o eliminar productos de su lista de seguimiento, reseñar productos, y ver las reseñas de tiendas.
+  
+- **Administrador:** Tiene permisos para agregar y eliminar productos del sistema, además de gestionar el catálogo de productos.
+
+---
+
 ## Requerimientos Funcionales (RF)
 
 - **El usuario debe poder buscar ítems** mediante una barra de búsqueda que esté disponible en la parte superior de todas las páginas.

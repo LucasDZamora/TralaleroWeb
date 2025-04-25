@@ -85,7 +85,7 @@ El objetivo de este proyecto es proporcionar una herramienta útil y accesible q
 ---
 
 ## Prototipo de diseño  
-Puedes ver los prototipos completos en [Figma](https://www.figma.com/design/P5ZCkmvzJPXbf0Q4MrjiHx/Dise%C3%B1oprototipos?node-id=0-1&t=yTsY3fzxhUPc6GON-1)
+Puedes ver los prototipos completos en [Figma](https://www.figma.com/design/27nvS768OmbEAa1kWNkBae/Solotodo?node-id=176-10268&t=Q1tA8qiBHgqHZT0g-1)
 
 ---
 

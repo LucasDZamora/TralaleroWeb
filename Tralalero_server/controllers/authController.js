@@ -2,17 +2,25 @@ const db = require('../db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+
 exports.register = (req, res) => {
-  const { nombre, email, password } = req.body;
+  const { nombre, email, password, comuna, region, rut } = req.body;
+
+  if (!nombre || !email || !password || !comuna || !region || !rut) {
+    return res.status(400).json({ error: 'Faltan campos obligatorios' });
+  }
+
   const hash = bcrypt.hashSync(password, 10);
 
-  db.query('INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)',
-    [nombre, email, hash],
+  db.query(
+    'INSERT INTO usuarios (nombre, email, password, comuna, region, rut, esAdmin) VALUES (?, ?, ?, ?, ?, ?, 0)',
+    [nombre, email, hash, comuna, region, rut],
     (err, results) => {
       if (err) {
-        console.error(err);
+        console.error('Error al registrar usuario:', err);
         return res.status(500).json({ error: 'Error al registrar usuario' });
       }
+
       res.json({ message: 'Usuario registrado con éxito' });
     }
   );

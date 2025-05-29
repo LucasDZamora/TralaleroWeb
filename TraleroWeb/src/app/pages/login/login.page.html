@@ -1,0 +1,69 @@
+<ion-content [fullscreen]="true" class="login-page">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <!-- Caja principal blanca -->
+      <ion-col size-md="10" size-lg="8">
+        <div class="login-container">
+          <ion-row>
+            <!-- Lado izquierdo: Usuarios registrados -->
+            <ion-col size="12" size-md="6" class="registered">
+              <h2>Usuarios registrados</h2>
+              <p>Si tienes una cuenta, inicia sesión con tu dirección de correo electrónico.</p>
+
+              <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+                <ion-item lines="full">
+                  <ion-label position="stacked">Correo electrónico *</ion-label>
+                  <ion-input
+                    type="email"
+                    name="email"
+                    required
+                    [(ngModel)]="credentials.email"
+                    placeholder="Correo electrónico"
+                  ></ion-input>
+                </ion-item>
+
+                <ion-item lines="full" class="ion-margin-top">
+                  <ion-label position="stacked">Contraseña *</ion-label>
+                  <ion-input
+                    type="password"
+                    name="password"
+                    required
+                    [(ngModel)]="credentials.password"
+                    placeholder="Contraseña"
+                  ></ion-input>
+                </ion-item>
+
+                <ion-button
+                  type="submit"
+                  expand="block"
+                  class="btn-login ion-margin-top"
+                  [disabled]="!loginForm.valid"
+                >
+                  Iniciar sesión
+                </ion-button>
+
+                <div class="forgot">
+                  <a (click)="onForgotPassword()">¿Olvidaste tu contraseña?</a>
+                </div>
+              </form>
+            </ion-col>
+
+            <!-- Lado derecho: Nuevo usuario -->
+            <ion-col size="12" size-md="6" class="new-user">
+              <h2>¿Nuevo usuario?</h2>
+              <p>Crear una cuenta tiene muchos beneficios:</p>
+              <ul>
+                <li>¡Guarda productos en tus favoritos!</li>
+                <li>¡Entérate apenas bajen de precio!</li>
+              </ul>
+
+              <ion-button expand="block" class="btn-register" (click)="onRegister()">
+                Crear una cuenta
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

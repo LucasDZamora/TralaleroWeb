@@ -1,0 +1,65 @@
+.login-page {
+  --background: #f0f2f8;
+
+  .login-container {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+    ion-row {
+      align-items: start;
+    }
+
+    h2 {
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+      color: #333333;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: #555555;
+      line-height: 1.4;
+    }
+
+    .registered {
+      border-right: 1px solid #e0e0e0;
+      padding-right: 1.5rem;
+    }
+
+    .new-user {
+      padding-left: 1.5rem;
+
+      ul {
+        margin: 0 0 1.5rem 1rem;
+        list-style-type: disc;
+        color: #555555;
+      }
+    }
+
+    .btn-login {
+      --background: #0066ff;
+      --color: #ffffff;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+
+    .forgot {
+      margin-top: 0.75rem;
+      a {
+        font-size: 0.9rem;
+        color: #0066ff;
+        text-decoration: none;
+      }
+    }
+
+    .btn-register {
+      --background: #0066ff;
+      --color: #ffffff;
+      font-weight: 600;
+      border-radius: 4px;
+      margin-top: 2rem;
+    }
+  }
+}

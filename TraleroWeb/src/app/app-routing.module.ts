@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/buscar-producto/buscar-producto.module').then( m => m.BuscarProductoPageModule)
   },
   {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
+  },
+  {
     path: 'categorias',
     loadChildren: () => import('./pages/categorias/categorias.module').then( m => m.CategoriasPageModule)
   },
@@ -27,6 +31,11 @@ const routes: Routes = [
     path: 'tiendas',
     loadChildren: () => import('./pages/tiendas/tiendas.module').then( m => m.TiendasPageModule)
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+
 
 ];
 

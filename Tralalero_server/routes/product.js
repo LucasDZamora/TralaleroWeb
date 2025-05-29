@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
 
-// Ruta GET /api/productos/buscar?nombre=xxx
+// /api/productos/buscar?nombre=xxx
 router.get('/buscar', productController.buscarProductos);
 
-module.exports = router;
+// /api/productos/:id/historial?tiendaId=#
+router.get('/:id/historial', productController.obtenerHistorialPrecios);
 
-
-// Ruta GET /api/productos/:id
+// /api/productos/:id
 router.get('/:id', productController.obtenerProductoPorId);
+
+module.exports = router;

@@ -4,20 +4,21 @@ const jwt = require('jsonwebtoken');
 
 
 exports.register = (req, res) => {
-  const { nombre, email, password, comuna, region, rut } = req.body;
+  const { nombre, correo, contraseña, comuna, region, rut } = req.body;
 
-  if (!nombre || !email || !password || !comuna || !region || !rut) {
+  if (!nombre || !correo || !contraseña || !comuna || !region || !rut) {
     return res.status(400).json({ error: 'Faltan campos obligatorios' });
   }
 
-  const hash = bcrypt.hashSync(password, 10);
+  const hash = bcrypt.hashSync(contraseña, 10);
 
   db.query(
-    'INSERT INTO usuarios (nombre, email, password, comuna, region, rut, esAdmin) VALUES (?, ?, ?, ?, ?, ?, 0)',
-    [nombre, email, hash, comuna, region, rut],
+    'INSERT INTO usuarios (nombre, correo, contraseña, comuna, region, rut, esAdmin) VALUES (?, ?, ?, ?, ?, ?, 0)',
+    [nombre, correo, hash, comuna, region, rut],
     (err, results) => {
       if (err) {
-        console.error('Error al registrar usuario:', err);
+        
+        console.error('Error al registrar usuario:', err, 'Datos:', { nombre, correo, comuna, region, rut });
         return res.status(500).json({ error: 'Error al registrar usuario' });
       }
 
@@ -27,23 +28,24 @@ exports.register = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  const { email, password } = req.body;
+  const { correo, contraseña } = req.body;
 
-  db.query('SELECT * FROM usuarios WHERE email = ?', [email], (err, results) => {
+  db.query('SELECT * FROM usuarios WHERE correo = ?', [correo], (err, results) => {
     if (err || results.length === 0) {
       return res.status(401).json({ error: 'Credenciales inválidas' });
     }
 
     const user = results[0];
-    const isMatch = bcrypt.compareSync(password, user.password);
+
+    const isMatch = bcrypt.compareSync(contraseña, user.contraseña);
     if (!isMatch) {
       return res.status(401).json({ error: 'Credenciales inválidas' });
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user.idUsuario, correo: user.correo }, process.env.JWT_SECRET, {
       expiresIn: '1h'
     });
 
-    res.json({ token, user: { id: user.id, nombre: user.nombre, email: user.email } });
+    res.json({ token, user: { id: user.idUsuario, nombre: user.nombre, correo: user.correo } });
   });
 };

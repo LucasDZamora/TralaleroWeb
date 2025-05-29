@@ -50,3 +50,42 @@ exports.obtenerProductoPorId = (req, res) => {
     }
   );
 }
+
+
+exports.obtenerHistorialPrecios = (req, res) => {
+  const { id } = req.params;        // idProducto
+  const { tiendaId } = req.query;   // idTienda
+
+  if (!id || !tiendaId) {
+    return res
+      .status(400)
+      .json({ error: 'Faltan parámetros: id (producto) y tiendaId son obligatorios' });
+  }
+
+  const sql = `
+    SELECT 
+      pt.fecha,
+      pt.precio,
+      pt.oferta,
+      t.idTienda,
+      t.nombre AS nombreTienda
+    FROM ProductosTienda pt
+    JOIN tienda t       ON t.idTienda = pt.idTienda
+    WHERE pt.idProducto = ?
+      AND pt.idTienda   = ?
+    ORDER BY pt.fecha DESC;
+  `;
+
+  db.query(sql, [id, tiendaId], (err, rows) => {
+    if (err) {
+      console.error('Error al obtener historial:', err);
+      return res.status(500).json({ error: 'Error al obtener historial de precios' });
+    }
+    if (rows.length === 0) {
+      return res
+        .status(404)
+        .json({ message: 'No hay historial de precios para este producto y tienda' });
+    }
+    res.json(rows);
+  });
+};

@@ -1,75 +1,188 @@
 .custom-header {
-    .logo-img {
-        height: 40px;
-        margin-right: 10px;
+  .logo-img {
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  ion-searchbar.desktop-searchbar {
+    --background: #e4e4e4;
+    --border-radius: 10px;
+    --placeholder-color: #666;
+    --color: black;
+    --icon-color: #666;
+    max-width: 560px;
+    height: 40px;
+    margin: 0 20px;
+
+    @media (max-width: 1024px) {
+      max-width: 400px;
+      height: 36px;
+      margin: 0 10px;
+    }
+    @media (max-width: 768px) {
+      max-width: 280px;
+      height: 32px;
+      margin: 0 8px;
+    }
+  }
+
+  .nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    ion-button.nav-btn,
+    ion-button.login-btn,
+    ion-button.register-btn {
+      --background: #F5F5F5;
+      --color: black;
+      --border-radius: 10px;
+      font-size: 14px;
+      text-transform: none;
+      min-width: 110px;
+      height: 36px;
+
+      @media (max-width: 1024px) {
+        min-width: 90px;
+        font-size: 13px;
+        height: 32px;
+      }
+
+      @media (max-width: 768px) {
+        min-width: 70px;
+        font-size: 12px;
+        height: 28px;
+      }
+
+      &:hover,
+      &:focus {
+        --color: #7F57F1;
+      }
+
+      &::part(native) {
+        color: black;
+      }
+
+      &:hover::part(native),
+      &:focus::part(native) {
+        color: #7F57F1;
+      }
     }
 
-    ion-searchbar {
-        --background: #e4e4e4;
-        --border-radius: 10px;
-        --placeholder-color: #666;
-        --color: black;
-        --icon-color: #666;
-        max-width: 560px;
-        height: 40px;
-        margin: 0 20px;
+    ion-button.login-btn {
+      --background: #E3E3E3;
     }
 
+    ion-button.register-btn {
+      --background: #2C2C2C;
+      --color: white;
+
+      &:hover,
+      &:focus {
+        --color: #7F57F1;
+      }
+
+      &::part(native) {
+        color: white;
+      }
+
+      &:hover::part(native),
+      &:focus::part(native) {
+        color: #7F57F1;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
     .nav-buttons {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        ion-button.nav-btn,
-        ion-button.login-btn,
-        ion-button.register-btn {
-            --background: #F5F5F5;
-            --color: black;
-            --border-radius: 10px;
-            font-size: 14px;
-            text-transform: none;
-            min-width: 110px;
-
-            &:hover,
-            &:focus {
-                --color: #7F57F1;
-            }
-
-            &::part(native) {
-                color: black;
-            }
-
-            &:hover::part(native),
-            &:focus::part(native) {
-                color: #7F57F1;
-            }
-        }
-
-        ion-button.login-btn {
-            --background: #E3E3E3;
-        }
-
-        ion-button.register-btn {
-            --background: #2C2C2C;
-            --color: white;
-            --border-radius: 10px;
-            font-size: 14px;
-            text-transform: none;
-            min-width: 110px;
-
-            &:hover,
-            &:focus {
-                --color: #7F57F1;
-            }
-
-            &::part(native) {
-                color: white;
-            }
-
-            &:hover::part(native),
-            &:focus::part(native) {
-                color: #7F57F1;
-            }
-        }
+      display: none;
     }
+
+    .menu-button {
+      display: inline-flex;
+    }
+
+    ion-searchbar.desktop-searchbar {
+      display: none;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .menu-button {
+      display: none;
+    }
+
+    .mobile-searchbar {
+      display: none;
+    }
+  }
+}
+
+
+/* Menú hamburguesa */
+.menu-content {
+  padding: 16px;
+
+  .menu-header {
+    text-align: center;
+    margin-bottom: 12px;
+
+    h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+
+  .menu-login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 8px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .divider {
+    margin: 0 0 12px 0;
+  }
+
+  ion-searchbar.mobile-searchbar {
+    --background: #e4e4e4;
+    --border-radius: 10px;
+    --placeholder-color: #666;
+    --color: black;
+    --icon-color: #666;
+    margin-bottom: 16px;
+  }
+
+  .menu-list ion-item {
+    font-size: 16px;
+  }
+
+  .mirror-icon {
+    transform: scaleX(-1);
+  }
+
+  .menu-list ion-item {
+    color: #666666; 
+  }
+
+  .menu-list ion-item.active-menu-item {
+    color: #7F57F1;
+  }
+
+   .menu-list ion-item.active-menu-item ion-icon {
+    color: #7F57F1 !important;
+  }
+
+  span.active-menu-item {
+      color: #7F57F1;
+  }
+
+  span.active-menu-item + ion-icon {
+      color: #7F57F1 !important;
+      transition: color 0.3s ease;
+  }
+
 }

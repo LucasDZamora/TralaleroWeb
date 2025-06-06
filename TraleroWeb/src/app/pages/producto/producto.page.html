@@ -1,0 +1,91 @@
+<ion-content>
+  <!-- Imagen del producto -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-badge color="success">NEW</ion-badge>
+        <ion-badge color="tertiary">-50%</ion-badge>
+
+        <ion-slides pager="true">
+          <ion-slide>
+            <ion-img src="assets/img/product-placeholder.png"></ion-img>
+          </ion-slide>
+          <ion-slide>
+            <ion-img src="assets/img/product-placeholder.png"></ion-img>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+
+      <!-- Detalle producto -->
+      <ion-col size="6">
+        <div class="stars">★★★★★ 11 Reviews</div>
+        <h2><strong>Product_name</strong></h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+        <!-- Tiendas -->
+        <ion-card>
+          <ion-card-content>
+            <p><strong>Store_1</strong> &nbsp; <ion-icon name="star" color="warning"></ion-icon> 4.8</p>
+            <p><del>$400.00</del> &nbsp; <strong>$199.00</strong></p>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content>
+            <p><strong>Store_2</strong> &nbsp; <ion-icon name="star" color="warning"></ion-icon> 4.8</p>
+            <p><del>$400.00</del> &nbsp; <strong>$299.00</strong></p>
+          </ion-card-content>
+        </ion-card>
+
+        <!-- Wishlist -->
+        <ion-button expand="block" fill="outline">
+          <ion-icon name="heart-outline"></ion-icon> &nbsp; Wishlist
+        </ion-button>
+
+        <!-- Detalles SKU -->
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6"><strong>SKU</strong><br />1117</ion-col>
+            <ion-col size="6"><strong>Category</strong><br />Living Room, Bedroom</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Gráfico de precio -->
+  <div class="chart-section">
+    <h2 class="ion-text-center">Price over time</h2>
+    <ion-img src="assets/img/price-chart-placeholder.png"></ion-img>
+  </div>
+
+  <!-- Comentarios -->
+  <ion-segment value="reviews">
+    <ion-segment-button value="info">Additional Info</ion-segment-button>
+    <ion-segment-button value="reviews">Reviews</ion-segment-button>
+  </ion-segment>
+
+  <ion-textarea placeholder="Add a comment..."></ion-textarea>
+  <ion-button expand="block">Post</ion-button>
+
+  <!-- Lista de Reviews -->
+  <ion-list>
+    <ion-item-divider>
+      <ion-label>11 Reviews</ion-label>
+      <ion-select placeholder="Newest">
+        <ion-select-option value="newest">Newest</ion-select-option>
+        <ion-select-option value="oldest">Oldest</ion-select-option>
+      </ion-select>
+    </ion-item-divider>
+
+    <ion-item *ngFor="let user of [1,2,3,4,5]">
+      <ion-label>
+        <h3>User_{{ user }}</h3>
+        <p>★★★★★</p>
+        <p>I bought it 3 weeks ago and now come back just to say "Awesome Product"! I really enjoy it. At vero eos et accusamus et iusto odio dignissimos ducimus...</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" fill="outline">Load more</ion-button>
+
+</ion-content>

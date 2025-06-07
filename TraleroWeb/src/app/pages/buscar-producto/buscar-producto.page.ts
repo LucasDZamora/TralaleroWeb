@@ -1,21 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ProductoService } from 'src/app/services/producto.service';
 import { Producto } from 'src/app/models/producto';
 
 @Component({
   selector: 'app-buscar-producto',
   templateUrl: './buscar-producto.page.html',
   styleUrls: ['./buscar-producto.page.scss'],
-  standalone:false
+  standalone: false,
 })
-export class BuscarProductoPage {
-  productos: Producto[] = [
-    { id: 1, nombre: 'Laptop', descripcion: 'Gaming', precio: 1200, categoria: 'Tecnología' },
-    { id: 2, nombre: 'Zapatillas', descripcion: 'Deportivas', precio: 2000, categoria: 'Ropa' },
-    { id: 3, nombre: 'Celular', descripcion: 'Smartphone', precio: 2500, categoria: 'Tecnología' },
-    { id: 4, nombre: 'Polera', descripcion: 'Verano', precio: 1500, categoria: 'Ropa' },
-    { id: 5, nombre: 'Audífonos', descripcion: 'Bluetooth', precio: 3000, categoria: 'Tecnología' },
-  ];
-
+export class BuscarProductoPage implements OnInit {
+  productos: Producto[] = [];
   productosFiltrados: Producto[] = [];
 
   orden: 'asc' | 'desc' = 'asc';
@@ -25,35 +20,48 @@ export class BuscarProductoPage {
   };
 
   categorias: string[] = [];
-  rangosPrecio = [
-    { min: 0, max: 1000, seleccionado: false },
-    { min: 1000, max: 2000, seleccionado: false },
-    { min: 2000, max: 3000, seleccionado: false },
-    { min: 3000, max: 4000, seleccionado: false },
-  ];
+
+  constructor(
+    private route: ActivatedRoute,
+    private productoService: ProductoService
+  ) {}
 
   ngOnInit() {
-    this.productosFiltrados = [...this.productos];
-    this.categorias = [...new Set(this.productos.map(p => p.categoria))];
+    this.route.queryParams.subscribe(params => {
+      const nombre = params['nombre'];
+      if (nombre) {
+        this.productoService.buscarProductos(nombre).subscribe({
+          next: (res) => {
+            this.productos = res;
+            this.productosFiltrados = [...res];
+            this.categorias = [...new Set(res.map(p => p.categoria))];
+            this.ordenarProductos();
+          },
+          error: (err) => {
+            console.error('Error al obtener productos:', err);
+            this.productos = [];
+            this.productosFiltrados = [];
+          }
+        });
+      }
+    });
   }
 
   ordenarProductos() {
+    // Ordenar por nombre, por ejemplo
     this.productosFiltrados.sort((a, b) => {
-      return this.orden === 'asc' ? a.precio - b.precio : b.precio - a.precio;
+      const nombreA = a.nombre.toLowerCase();
+      const nombreB = b.nombre.toLowerCase();
+
+      if (nombreA < nombreB) return this.orden === 'asc' ? -1 : 1;
+      if (nombreA > nombreB) return this.orden === 'asc' ? 1 : -1;
+      return 0;
     });
   }
 
   filtrar() {
-    const rangosSeleccionados = this.rangosPrecio.filter(r => r.seleccionado);
-
     this.productosFiltrados = this.productos.filter(p => {
-      const cumpleCategoria = this.filtro.categoria ? p.categoria === this.filtro.categoria : true;
-
-      const cumpleRango =
-        rangosSeleccionados.length === 0 ||
-        rangosSeleccionados.some(r => p.precio >= r.min && p.precio <= r.max);
-
-      return cumpleCategoria && cumpleRango;
+      return this.filtro.categoria ? p.categoria === this.filtro.categoria : true;
     });
 
     this.ordenarProductos();

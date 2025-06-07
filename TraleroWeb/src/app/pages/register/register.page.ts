@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/usuarios.service'; 
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+
 import { Usuario } from '../../models/usuario'; 
 
 @Component({
@@ -93,11 +96,16 @@ export class RegisterPage implements OnInit {
          }
   ];
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertCtrl: AlertController
+  ) {}
+
 
   ngOnInit() {}
 
-  registrar() {
+  async registrar() {
     this.rutInvalido = false;
     this.correoInvalido = false;
 
@@ -130,9 +138,27 @@ export class RegisterPage implements OnInit {
     }
 
     this.errorMensaje = '';
+
     this.authService.registrarUsuario(this.usuario).subscribe(
-      res => {
+      async res => {
         console.log('Registro exitoso:', res);
+
+        // Crear alerta de éxito
+        const alert = await this.alertCtrl.create({
+          header: 'Registro exitoso',
+          message: 'Tu cuenta ha sido creada correctamente.',
+          buttons: [
+            {
+              text: 'OK',
+              handler: () => {
+                // Redirigir a login
+                this.router.navigate(['/login']);
+              }
+            }
+          ]
+        });
+
+        await alert.present();
       },
       err => {
         console.error('Error al registrar:', err);
@@ -142,6 +168,7 @@ export class RegisterPage implements OnInit {
       }
     );
   }
+
 
   actualizarComunas() {
     const regionSeleccionada = this.regiones.find(r => r.region === this.usuario.region);

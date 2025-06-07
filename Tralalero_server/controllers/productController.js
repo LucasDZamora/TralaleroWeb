@@ -183,3 +183,43 @@ exports.obtenerTiendasYPreciosProducto = (req, res) => {
     res.json(results);
   });
 };
+
+exports.obtenerResenasProducto = (req, res) => {
+  const { id } = req.params; // idProducto
+
+  if (!id) {
+    return res.status(400).json({ error: 'Falta el parámetro idProducto' });
+  }
+
+  const sql = `
+    SELECT
+      rp.idReseña,
+      rp.reseña AS comentario, -- ¡ASEGÚRATE DE QUE ESTE ALIAS ESTÉ AQUÍ!
+      rp.valoración AS valoracionResena,
+      u.idUsuario,
+      u.nombre AS nombreUsuario,
+      u.correo AS correoUsuario
+    FROM
+      reseñaproducto rp
+    JOIN
+      usuarios u ON rp.idUsuario = u.idUsuario
+    WHERE
+      rp.idProducto = ?
+    ORDER BY
+      rp.idReseña DESC;
+  `;
+
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error('Error al obtener reseñas del producto:', err);
+      return res.status(500).json({ error: 'Error al obtener reseñas del producto' });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron reseñas para este producto.' });
+    }
+
+    res.json(results);
+  });
+};
+

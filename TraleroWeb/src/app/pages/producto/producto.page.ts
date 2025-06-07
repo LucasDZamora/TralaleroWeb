@@ -12,10 +12,11 @@ export class ProductoPage implements OnInit {
 
   producto: any = null;
   historial: any[] = [];
-  tiendasProducto: any[] = []; // Nueva variable para almacenar todas las tiendas donde se vende el producto
-  selectedTiendaHistorialId: number | null = null; // Para el select del historial
-  selectedTiendaPrecioActualId: number | null = null; // Para el select de precios actuales
-  precioActualTiendaSeleccionada: any = null; // Para mostrar el precio de la tienda seleccionada
+  tiendasProducto: any[] = [];
+  resenas: any[] = []; // NUEVA PROPIEDAD para almacenar las reseñas
+  selectedTiendaHistorialId: number | null = null;
+  selectedTiendaPrecioActualId: number | null = null;
+  precioActualTiendaSeleccionada: any = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,6 +66,21 @@ export class ProductoPage implements OnInit {
           },
           error: (e: any) => console.error('Error cargando tiendas y precios actuales:', e)
         });
+
+        // *********************************************************************
+        // NUEVA LLAMADA: Cargar reseñas del producto
+        // *********************************************************************
+        this.productoService.obtenerResenasProducto(productoId).subscribe({
+          next: (resenasData: any[]) => {
+            this.resenas = resenasData;
+            console.log('Reseñas del producto:', this.resenas);
+          },
+          error: (e: any) => {
+            console.error('Error cargando reseñas del producto:', e);
+            this.resenas = []; // Asegurarse de que sea un array vacío en caso de error o 404
+          }
+        });
+
       },
       error: (e: any) => console.error('Error cargando producto principal:', e)
     });

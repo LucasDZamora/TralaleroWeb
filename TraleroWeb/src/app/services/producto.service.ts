@@ -22,10 +22,14 @@ export class ProductoService {
     return this.http.get<any[]>(`${this.baseUrl}/${idProducto}/historial?tiendaId=${tiendaId}`);
   }
 
-  // ***********************************************************************************
-  // NUEVO MÉTODO: Para obtener todas las tiendas y sus precios actuales para un producto
-  // ***********************************************************************************
   obtenerTiendasYPreciosActuales(idProducto: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/${idProducto}/tiendas-precios-actuales`);
+  }
+
+  // ***********************************************************************************
+  // NUEVO MÉTODO: Para obtener las reseñas de un producto
+  // ***********************************************************************************
+  obtenerResenasProducto(idProducto: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/${idProducto}/resenas`);
   }
 }

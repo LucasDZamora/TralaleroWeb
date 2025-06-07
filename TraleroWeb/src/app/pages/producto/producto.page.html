@@ -95,7 +95,7 @@
       <p *ngIf="tiendasProducto.length === 0" class="ion-padding-start">
         Este producto no está disponible en otras tiendas o no se encontró información.
       </p>
-      </ion-card-content>
+    </ion-card-content>
   </ion-card>
 
   <ion-item-divider class="ion-margin-top">
@@ -140,7 +140,25 @@
   <ng-template #sinHistorial>
     <p class="ion-padding">No hay historial de precios para la tienda seleccionada o el producto.</p>
   </ng-template>
-  </ion-content>
+
+ <ion-item-divider class="ion-margin-top">
+    <ion-label>Comentarios y Reseñas</ion-label>
+  </ion-item-divider>
+
+  <ion-list *ngIf="resenas.length > 0; else noResenas">
+    <ion-item *ngFor="let resena of resenas">
+      <ion-label>
+        <h3>{{ resena.nombreUsuario }}</h3>
+        <p>Valoración: ⭐ {{ resena.valoracionResena }}</p>
+        <p>{{ resena.comentario }}</p> </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #noResenas>
+    <p class="ion-padding no-resenas-message">Este producto aún no tiene comentarios ni reseñas.</p>
+  </ng-template>
+
+</ion-content>
 
 <ng-template #cargando>
   <ion-content class="ion-padding">

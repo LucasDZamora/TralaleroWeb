@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { BuscarProductoPageRoutingModule } from './buscar-producto-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { BuscarProductoPage } from './buscar-producto.page';
 
@@ -13,7 +15,9 @@ import { BuscarProductoPage } from './buscar-producto.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    BuscarProductoPageRoutingModule
+    BuscarProductoPageRoutingModule,
+    HttpClientModule,
+    
   ],
   declarations: [BuscarProductoPage]
 })

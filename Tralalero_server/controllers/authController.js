@@ -38,7 +38,7 @@ exports.register = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  const { correo, contraseña } = req.body;
+  const { correo, contrasena } = req.body;
 
   db.query('SELECT * FROM usuarios WHERE correo = ?', [correo], (err, results) => {
     if (err || results.length === 0) {
@@ -47,7 +47,7 @@ exports.login = (req, res) => {
 
     const user = results[0];
 
-    const isMatch = bcrypt.compareSync(contraseña, user.contraseña);
+    const isMatch = bcrypt.compareSync(contrasena, user.contraseña);
     if (!isMatch) {
       return res.status(401).json({ error: 'Credenciales inválidas' });
     }

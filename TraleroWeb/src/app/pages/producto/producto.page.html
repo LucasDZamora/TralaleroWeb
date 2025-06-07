@@ -12,7 +12,7 @@
   <ion-img [src]="producto.imagen"
            (ionError)="onImageError($event)"
            alt="Imagen del producto"
-           class="product-image"  ></ion-img>
+           class="product-image"></ion-img>
 
   <ion-card>
     <ion-card-header>
@@ -48,13 +48,78 @@
       <ng-template #noOferta>
         <p>No se encontró información de precio disponible para este producto.</p>
       </ng-template>
-    </ion-card-content>
+
+      <ion-item-divider class="ion-margin-top">
+        <ion-label>Ver Precio Actual por Tienda</ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label position="stacked">Seleccionar Tienda</ion-label>
+        <ion-select
+          placeholder="Elige una tienda"
+          [(ngModel)]="selectedTiendaPrecioActualId"
+          (ionChange)="onTiendaPrecioActualChange()"
+          [disabled]="tiendasProducto.length === 0"
+        >
+          <ion-select-option *ngFor="let tienda of tiendasProducto" [value]="tienda.idTienda">
+            {{ tienda.nombreTienda }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div *ngIf="precioActualTiendaSeleccionada">
+        <ion-card class="ion-margin-top">
+          <ion-card-content>
+            <p><strong>Tienda:</strong> {{ precioActualTiendaSeleccionada.nombreTienda }}</p>
+            <p>
+              <strong>Precio Actual:</strong>
+              <span *ngIf="precioActualTiendaSeleccionada.oferta > 0">
+                <del>{{ precioActualTiendaSeleccionada.precio | currency:'CLP':'symbol':'1.0-0' }}</del>
+                <strong>&nbsp;¡Oferta!</strong>
+              </span>
+              <span *ngIf="precioActualTiendaSeleccionada.oferta === 0">
+                {{ precioActualTiendaSeleccionada.precio | currency:'CLP':'symbol':'1.0-0' }}
+              </span>
+            </p>
+            <p>
+              <strong>Fecha del Precio:</strong>
+              {{ precioActualTiendaSeleccionada.fechaPrecio | date:'shortDate' }}
+            </p>
+            <p><a [href]="precioActualTiendaSeleccionada.linkTienda" target="_blank">Visitar Tienda</a></p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <p *ngIf="!precioActualTiendaSeleccionada && selectedTiendaPrecioActualId !== null" class="ion-padding-start">
+        No se encontró información de precio para la tienda seleccionada.
+      </p>
+      <p *ngIf="tiendasProducto.length === 0" class="ion-padding-start">
+        Este producto no está disponible en otras tiendas o no se encontró información.
+      </p>
+      </ion-card-content>
   </ion-card>
+
+  <ion-item-divider class="ion-margin-top">
+    <ion-label>Historial de Precios por Tienda</ion-label>
+  </ion-item-divider>
+
+  <ion-item>
+    <ion-label position="stacked">Seleccionar Tienda para Historial</ion-label>
+    <ion-select
+      placeholder="Elige una tienda para el historial"
+      [(ngModel)]="selectedTiendaHistorialId"
+      (ionChange)="onTiendaHistorialChange()"
+      [disabled]="tiendasProducto.length === 0"
+    >
+      <ion-select-option *ngFor="let tienda of tiendasProducto" [value]="tienda.idTienda">
+        {{ tienda.nombreTienda }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
 
   <ion-list *ngIf="historial.length > 0; else sinHistorial">
     <ion-list-header>
       <ion-label>Historial de precios ({{ historial[0]?.nombreTienda || 'Tienda' }})</ion-label>
-      </ion-list-header>
+    </ion-list-header>
     <ion-item *ngFor="let h of historial">
       <ion-label>
         <h3>Fecha: {{ h.fecha | date:'shortDate' }}</h3>
@@ -63,7 +128,7 @@
           <span *ngIf="h.oferta > 0">
             <del>{{ h.precio | currency:'CLP':'symbol':'1.0-0' }}</del>
             <strong>&nbsp;Oferta!</strong>
-            </span>
+          </span>
           <span *ngIf="h.oferta === 0">
             {{ h.precio | currency:'CLP':'symbol':'1.0-0' }}
           </span>
@@ -73,10 +138,9 @@
   </ion-list>
 
   <ng-template #sinHistorial>
-    <p class="ion-padding">No hay historial de precios para esta tienda.</p>
+    <p class="ion-padding">No hay historial de precios para la tienda seleccionada o el producto.</p>
   </ng-template>
-
-</ion-content>
+  </ion-content>
 
 <ng-template #cargando>
   <ion-content class="ion-padding">

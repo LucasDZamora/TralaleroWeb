@@ -15,10 +15,11 @@
                   <ion-label position="stacked">Correo electrónico *</ion-label>
                   <ion-input
                     type="email"
-                    name="email"
+                    name="correo"
                     required
-                    [(ngModel)]="credentials.email"
+                    [(ngModel)]="DatosLogin.correo"
                     placeholder="Correo electrónico"
+                    #correoInput="ngModel"
                   ></ion-input>
                 </ion-item>
 
@@ -26,10 +27,11 @@
                   <ion-label position="stacked">Contraseña *</ion-label>
                   <ion-input
                     type="password"
-                    name="password"
+                    name="contrasena"
                     required
-                    [(ngModel)]="credentials.password"
+                    [(ngModel)]="DatosLogin.contrasena"
                     placeholder="Contraseña"
+                    #passwordInput="ngModel"
                   ></ion-input>
                 </ion-item>
 
@@ -41,10 +43,6 @@
                 >
                   Iniciar sesión
                 </ion-button>
-
-                <div class="forgot">
-                  <a (click)="onForgotPassword()">¿Olvidaste tu contraseña?</a>
-                </div>
               </form>
             </ion-col>
 

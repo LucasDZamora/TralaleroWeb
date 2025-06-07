@@ -1,70 +1,135 @@
-<ion-content class="ion-padding">
+<ion-content [fullscreen]="true" class="ion-padding">
   <div class="form-wrapper">
-    <form>
+    <form #form="ngForm" (ngSubmit)="registrar()">
+
       <h2>Crear una cuenta</h2>
       <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></p>
 
       <div class="form-grid">
         <!-- Columna Izquierda -->
         <div class="column">
-          <ion-label class="input-label">
-            Nombre de usuario <span class="required-asterisk">*</span>
-          </ion-label>
-          <ion-input placeholder="Nombre de usuario" required></ion-input>
+          <!-- Nombre -->
+          <ion-label class="input-label">Nombre <span class="required-asterisk">*</span></ion-label>
+          <ion-input
+            name="nombre"
+            [(ngModel)]="usuario.nombre"
+            required
+            #nombreRef="ngModel"
+            [ngClass]="{'invalid': nombreRef.invalid && nombreRef.touched}"
+            placeholder="Nombre de usuario"
+          ></ion-input>
+          <div *ngIf="nombreRef.invalid && nombreRef.touched" class="error">Campo obligatorio</div>
 
-          <ion-label class="input-label">
-            RUT <span class="required-asterisk">*</span>
-          </ion-label>
-          <ion-input placeholder="RUT" required></ion-input>
+          <!-- RUT -->
+          <ion-label class="input-label">RUT <span class="required-asterisk">*</span></ion-label>
+          <ion-input
+            name="rut"
+            [(ngModel)]="usuario.rut"
+            required
+            #rutRef="ngModel"
+            [ngClass]="{
+              'invalid': (rutRef.invalid && rutRef.touched) || rutInvalido
+            }"
+            placeholder="RUT (ej: 12345678-9)"
+          ></ion-input>
+          <div *ngIf="rutRef.invalid && rutRef.touched" class="error">Campo obligatorio</div>
+          <div *ngIf="rutInvalido" class="error">El RUT no tiene un formato válido</div>
 
-          <ion-label class="input-label">
-            Correo Electrónico <span class="required-asterisk">*</span>
-          </ion-label>
-          <ion-input type="email" placeholder="Correo Electrónico" required></ion-input>
+          <!-- Correo -->
+          <ion-label class="input-label">Correo <span class="required-asterisk">*</span></ion-label>
+          <ion-input
+            type="email"
+            name="correo"
+            [(ngModel)]="usuario.correo"
+            required
+            #correoRef="ngModel"
+            [ngClass]="{
+              'invalid': (correoRef.invalid && correoRef.touched) || correoInvalido
+            }"
+            placeholder="ejemplo@correo.com"
+          ></ion-input>
+          <div *ngIf="correoRef.invalid && correoRef.touched" class="error">Correo inválido</div>
+          <div *ngIf="correoInvalido" class="error">El correo electrónico no es válido</div>
 
-          <ion-label class="input-label">
-            Contraseña <span class="required-asterisk">*</span>
-          </ion-label>
-          <ion-input type="password" placeholder="Contraseña" required></ion-input>
+          <!-- Contraseña -->
+          <ion-label class="input-label">Contraseña <span class="required-asterisk">*</span></ion-label>
+          <ion-input
+            type="password"
+            name="contrasena"
+            [(ngModel)]="usuario.contrasena"
+            required
+            #passRef="ngModel"
+            [ngClass]="{'invalid': passRef.invalid && passRef.touched}"
+            placeholder="Contraseña"
+          ></ion-input>
+          <div *ngIf="passRef.invalid && passRef.touched" class="error">Campo obligatorio</div>
 
+          <!-- Términos -->
           <ion-item lines="none">
-            <ion-checkbox slot="start" required checked></ion-checkbox>
+            <ion-checkbox required slot="start" [(ngModel)]="aceptaTerminos" name="terminos"></ion-checkbox>
             <ion-label>Aceptar términos y condiciones</ion-label>
           </ion-item>
         </div>
 
         <!-- Columna Central -->
         <div class="column">
-          <ion-label class="input-label">
-            Región <span class="required-asterisk">*</span>
-          </ion-label>
-          <ion-select placeholder="-----" required>
-            <ion-select-option value="rm">RM</ion-select-option>
-            <!-- Agrega más regiones -->
+          <!-- Región -->
+          <ion-label class="input-label">Región <span class="required-asterisk">*</span></ion-label>
+          <ion-select
+            name="region"
+            [(ngModel)]="usuario.region"
+            required
+            #regionRef="ngModel"
+            (ionChange)="actualizarComunas()"
+            [ngClass]="{'invalid': regionRef.invalid && regionRef.touched}"
+            placeholder="Seleccione región"
+          >
+            <ion-select-option *ngFor="let reg of regiones" [value]="reg.region">
+              {{ reg.region }}
+            </ion-select-option>
           </ion-select>
+          <div *ngIf="regionRef.invalid && regionRef.touched" class="error">Campo obligatorio</div>
 
-          <ion-label class="input-label">
-            Comuna <span class="required-asterisk">*</span>
-          </ion-label>
-          <ion-select placeholder="-----" required>
-            <ion-select-option value="santiago">Santiago</ion-select-option>
-            <!-- Agrega más comunas -->
+          <!-- Comuna -->
+          <ion-label class="input-label">Comuna <span class="required-asterisk">*</span></ion-label>
+          <ion-select
+            name="comuna"
+            [(ngModel)]="usuario.comuna"
+            required
+            #comunaRef="ngModel"
+            [ngClass]="{'invalid': comunaRef.invalid && comunaRef.touched}"
+            placeholder="Seleccione comuna"
+            [disabled]="comunasFiltradas.length === 0"
+          >
+            <ion-select-option *ngFor="let comuna of comunasFiltradas" [value]="comuna">
+              {{ comuna }}
+            </ion-select-option>
           </ion-select>
+          <div *ngIf="comunaRef.invalid && comunaRef.touched" class="error">Campo obligatorio</div>
 
-          <ion-label class="input-label">
-            Confirmar Contraseña <span class="required-asterisk">*</span>
-          </ion-label>
-          <ion-input type="password" placeholder="Contraseña" required></ion-input>
+          <!-- Confirmar contraseña -->
+          <ion-label class="input-label">Confirmar Contraseña <span class="required-asterisk">*</span></ion-label>
+          <ion-input
+            type="password"
+            name="confirmar"
+            [(ngModel)]="confirmarContrasena"
+            required
+            #confirmarRef="ngModel"
+            [ngClass]="{'invalid': (confirmarContrasena !== usuario.contrasena) && confirmarRef.touched}"
+            placeholder="Repite la contraseña"
+          ></ion-input>
+          <div *ngIf="(confirmarContrasena !== usuario.contrasena) && confirmarRef.touched" class="error">
+            Las contraseñas no coinciden
+          </div>
         </div>
 
-        <!-- Columna Derecha: Ilustración y botón -->
+        <!-- Columna Derecha -->
         <div class="column illustration">
           <img src="../../assets/images/imagenRegister.jpg" alt="Ilustración" />
-
-          <!-- Botón debajo de la imagen -->
           <div class="button-container">
-            <ion-button expand="block" color="dark">Crear Cuenta</ion-button>
+            <ion-button expand="block" color="dark" type="submit">Crear Cuenta</ion-button>
           </div>
+          <div *ngIf="errorMensaje" class="error global-error">{{ errorMensaje }}</div>
         </div>
       </div>
     </form>

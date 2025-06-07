@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,13 @@ export class HeaderComponent{
 
   searchText: string = ''; 
 
+  constructor(private router: Router) {}
+
   onSearch() {
-    this.searchEvent.emit(this.searchText); 
+    if (this.searchText.trim()) {
+      this.router.navigate(['/buscar-producto'], {
+        queryParams: { nombre: this.searchText }
+      });
+    }
   }
 }

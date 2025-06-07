@@ -1,4 +1,3 @@
-
 <ion-content>
   <ion-grid>
     <!-- Ordenamiento -->
@@ -7,8 +6,8 @@
         <ion-item>
           <ion-label>Ordenar por</ion-label>
           <ion-select [(ngModel)]="orden" (ionChange)="ordenarProductos()">
-            <ion-select-option value="asc">Precio Ascendente</ion-select-option>
-            <ion-select-option value="desc">Precio Descendente</ion-select-option>
+            <ion-select-option value="asc">Nombre Ascendente</ion-select-option>
+            <ion-select-option value="desc">Nombre Descendente</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -26,7 +25,7 @@
             <!-- Categoría con Radio Buttons -->
             <div class="radio-group">
               <p><strong>Categoría</strong></p>
-              <ion-radio-group [(ngModel)]="filtro.categoria">
+              <ion-radio-group [(ngModel)]="filtro.categoria" (ionChange)="filtrar()">
                 <ion-item>
                   <ion-radio slot="start" value=""></ion-radio>
                   <ion-label>Todas</ion-label>
@@ -36,20 +35,6 @@
                   <ion-label>{{cat}}</ion-label>
                 </ion-item>
               </ion-radio-group>
-            </div>
-
-
-            <!-- Rangos de Precio con Checkboxes -->
-            <div class="checkbox-group">
-              <p><strong>Rango de Precio</strong></p>
-              <ion-item *ngFor="let rango of rangosPrecio">
-                <ion-checkbox
-                  slot="start"
-                  [(ngModel)]="rango.seleccionado"
-                  (ionChange)="filtrar()"
-                ></ion-checkbox>
-                <ion-label>{{rango.min}} - {{rango.max}}</ion-label>
-              </ion-item>
             </div>
 
             <ion-button expand="block" (click)="filtrar()">Aplicar Filtros</ion-button>
@@ -74,7 +59,9 @@
                 </ion-card-header>
                 <ion-card-content>
                   <p>{{producto.descripcion}}</p>
-                  <p><strong>${{producto.precio}}</strong></p>
+                  <!-- Aquí puedes mostrar valoración o link si quieres -->
+                  <p><strong>Valoración: {{producto.valoracion ?? 'N/A'}}</strong></p>
+                  <p><a [href]="producto.link" target="_blank">Ver producto</a></p>
                 </ion-card-content>
               </ion-card>
             </ion-col>

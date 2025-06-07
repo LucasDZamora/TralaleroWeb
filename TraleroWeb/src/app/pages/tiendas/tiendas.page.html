@@ -1,38 +1,36 @@
-<ion-content [fullscreen]="true" style="--background: #f8f9fa">
+<ion-content [fullscreen]="true" style="--background: #f8f9fa;">
 
-  <!-- Contador de tiendas -->
+  <!-- Contador -->
   <div class="tiendas-contador ion-margin-bottom">
-    <p class="ion-text-center">{{ tiendas.length }} Tiendas disponibles</p>
+    <p class="ion-text-center" style="font-weight: 600; font-size: 18px;">
+      {{ tiendas.length }} Tiendas disponibles
+    </p>
   </div>
 
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-md="6" *ngFor="let tienda of tiendas">
-        <ion-card class="tienda-card">
-          <ion-card-header class="ion-no-padding">
-            <ion-card-title class="tienda-nombre ion-padding-start">{{ tienda.nombre }}</ion-card-title>
-            <ion-card-subtitle class="tienda-resenas ion-padding-start">{{ tienda.resenas }} Reseñas</ion-card-subtitle>
+      <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let tienda of getTiendasPaginadas()">
+        <ion-card class="tienda-card" style="box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
+
+          <!-- Imagen -->
+          <img [src]="tienda.imagen"
+               alt="Imagen de tienda"
+               style="width: 100%; height: 140px; object-fit: cover; border-radius: 12px 12px 0 0;" />
+
+          <!-- Nombre + valoración -->
+          <ion-card-header class="ion-no-padding ion-padding-start ion-padding-top">
+            <ion-card-title style="font-size: 16px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              {{ tienda.nombre }}
+            </ion-card-title>
+            <ion-card-subtitle style="color: #666; font-size: 14px;">
+              {{ tienda.valoracion.toFixed(1) }} ★
+            </ion-card-subtitle>
           </ion-card-header>
 
-          <ion-card-content>
-            <!-- Estrellas -->
-            <div class="ion-text-start stars ion-margin-bottom">
-              <ng-container *ngIf="tienda.estrellas > 0; else sinEstrellas">
-                <ion-icon *ngFor="let star of [].constructor(tienda.estrellas)" name="star" class="estrella" aria-label="Estrella llena"></ion-icon>
-              </ng-container>
-              <ng-template #sinEstrellas>
-                <ion-icon *ngFor="let s of [].constructor(5)" name="star-outline" class="estrella" aria-label="Estrella vacía"></ion-icon>
-              </ng-template>
-            </div>
-
-            <!-- Icono emoji -->
-            <div class="ion-text-center emoji-tienda ion-margin-bottom">🏪</div>
-
-            <!-- Categorías -->
-            <div class="categorias ion-text-center">
-              <ion-chip *ngFor="let cat of tienda.categorias">
-                <ion-label>{{ cat }}</ion-label>
-              </ion-chip>
+          <!-- Estrellas -->
+          <ion-card-content class="ion-padding-top">
+            <div class="valoracion-estrellas ion-margin-bottom">
+              <ion-icon *ngFor="let icon of getStarIcons(tienda.valoracion)" [name]="icon" style="color: #f5c518; font-size: 18px; margin-right: 2px;"></ion-icon>
             </div>
           </ion-card-content>
         </ion-card>
@@ -42,20 +40,15 @@
 
   <!-- Paginación -->
   <div class="paginacion ion-text-center ion-margin-top">
-    <ion-button fill="outline" size="small" (click)="prevPage()" [disabled]="currentPage === 1">
-      &lt; Prev
-    </ion-button>
+    <ion-button fill="outline" size="small" (click)="prevPage()" [disabled]="currentPage === 1">&lt; Prev</ion-button>
 
-    <ion-button
-      fill="solid"
-      size="small"
-      *ngFor="let page of totalPagesArray"
-      [color]="page === currentPage ? 'primary' : 'light'"
-      (click)="goToPage(page)">
+    <ion-button *ngFor="let page of totalPagesArray"
+                fill="solid"
+                size="small"
+                [color]="page === currentPage ? 'primary' : 'light'"
+                (click)="goToPage(page)">
       {{ page < 10 ? '0' + page : page }}
     </ion-button>
-
-    <span *ngIf="totalPages > 4" class="dots">...</span>
 
     <ion-button fill="outline" size="small" (click)="nextPage()" [disabled]="currentPage === totalPages">
       Next &gt;

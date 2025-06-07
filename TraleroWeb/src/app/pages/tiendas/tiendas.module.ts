@@ -15,5 +15,7 @@ import { TiendasPage } from './tiendas.page';
     IonicModule,
     TiendasPageRoutingModule,
   ],
+declarations: [TiendasPage]
 })
+
 export class TiendasPageModule {}

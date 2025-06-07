@@ -1,58 +1,28 @@
-import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { TiendaService, Tienda } from 'src/app/services/tienda.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-tiendas',
-  standalone: true,
   templateUrl: './tiendas.page.html',
   styleUrls: ['./tiendas.page.scss'],
-  imports: [IonicModule, CommonModule, FormsModule]
+  standalone: false
 })
-export class TiendasPage {
-
-  tiendas = [
-    {
-      nombre: 'Tienda 1',
-      estrellas: 5,
-      resenas: 20,
-      categorias: ['Categoría de tienda 1', 'Categoría de tienda 2', 'Categoría de tienda 3', 'Categoría de tienda 4']
-    },
-    {
-      nombre: 'Tienda 2',
-      estrellas: 0,
-      resenas: 12,
-      categorias: ['Categoría de tienda 1', 'Categoría de tienda 2', 'Categoría de tienda 3', 'Categoría de tienda 4']
-    },
-    {
-      nombre: 'Tienda 3',
-      estrellas: 0,
-      resenas: 25,
-      categorias: ['Categoría de tienda 1', 'Categoría de tienda 2', 'Categoría de tienda 3', 'Categoría de tienda 4']
-    },
-    {
-      nombre: 'Tienda 4',
-      estrellas: 5,
-      resenas: 20,
-      categorias: ['Categoría de tienda 1', 'Categoría de tienda 2', 'Categoría de tienda 3', 'Categoría de tienda 4']
-    },
-    {
-      nombre: 'Tienda 5',
-      estrellas: 0,
-      resenas: 12,
-      categorias: ['Categoría de tienda 1', 'Categoría de tienda 2', 'Categoría de tienda 3', 'Categoría de tienda 4']
-    },
-    {
-      nombre: 'Tienda 6',
-      estrellas: 0,
-      resenas: 25,
-      categorias: ['Categoría de tienda 1', 'Categoría de tienda 2', 'Categoría de tienda 3', 'Categoría de tienda 4']
-    },
-  ];
+export class TiendasPage implements OnInit {
+  tiendas: Tienda[] = [];
 
   currentPage = 1;
-  totalPages = 4;
+  totalPages = 1;
+
+  constructor(private tiendaService: TiendaService) {}
+
+  ngOnInit() {
+    this.tiendaService.obtenerTiendas().subscribe(data => {
+      this.tiendas = data;
+      this.totalPages = Math.ceil(data.length / 12); // ← Muestra 12 por página
+    });
+  }
 
   get totalPagesArray() {
     return Array(this.totalPages).fill(0).map((_, i) => i + 1);
@@ -60,18 +30,40 @@ export class TiendasPage {
 
   goToPage(page: number) {
     this.currentPage = page;
-    // Aquí podrías cargar los datos correspondientes a esa página
   }
 
   prevPage() {
-    if (this.currentPage > 1) {
-      this.goToPage(this.currentPage - 1);
-    }
+    if (this.currentPage > 1) this.goToPage(this.currentPage - 1);
   }
 
   nextPage() {
-    if (this.currentPage < this.totalPages) {
-      this.goToPage(this.currentPage + 1);
+    if (this.currentPage < this.totalPages) this.goToPage(this.currentPage + 1);
+  }
+
+  getTiendasPaginadas() {
+    const start = (this.currentPage - 1) * 12; // ← Muestra 12 por página
+    return this.tiendas.slice(start, start + 12);
+  }
+
+  getStarIcons(valoracion: number): string[] {
+    const icons: string[] = [];
+    const fullStars = Math.floor(valoracion);
+    const decimal = valoracion % 1;
+    const hasHalfStar = decimal >= 0.25 && decimal < 0.75;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+    for (let i = 0; i < fullStars; i++) {
+      icons.push('star');
     }
+
+    if (hasHalfStar) {
+      icons.push('star-half');
+    }
+
+    for (let i = 0; i < emptyStars; i++) {
+      icons.push('star-outline');
+    }
+
+    return icons;
   }
 }

@@ -1,91 +1,168 @@
-<ion-content>
-  <!-- Imagen del producto -->
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6">
-        <ion-badge color="success">NEW</ion-badge>
-        <ion-badge color="tertiary">-50%</ion-badge>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle del Producto</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-        <ion-slides pager="true">
-          <ion-slide>
-            <ion-img src="assets/img/product-placeholder.png"></ion-img>
-          </ion-slide>
-          <ion-slide>
-            <ion-img src="assets/img/product-placeholder.png"></ion-img>
-          </ion-slide>
-        </ion-slides>
-      </ion-col>
+<ion-content *ngIf="producto; else cargando">
 
-      <!-- Detalle producto -->
-      <ion-col size="6">
-        <div class="stars">★★★★★ 11 Reviews</div>
-        <h2><strong>Product_name</strong></h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  <ion-img [src]="producto.imagen"
+           (ionError)="onImageError($event)"
+           alt="Imagen del producto"
+           class="product-image"></ion-img>
 
-        <!-- Tiendas -->
-        <ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ producto.nombre }}</ion-card-title>
+      <ion-card-subtitle>Categoría: {{ producto.categoria }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+      <p><strong>Valoración:</strong> ⭐ {{ producto.valoracionProducto }}</p>
+      <p><a [href]="producto.link" target="_blank">Ver en tienda (Original)</a></p>
+
+      <ion-item-divider>
+        <ion-label>Mejor Oferta Disponible</ion-label>
+      </ion-item-divider>
+
+      <div *ngIf="producto.precioMasBarato !== null && producto.precioMasBarato !== undefined; else noOferta">
+        <p>
+          <strong>Precio Más Barato:</strong>
+          <span *ngIf="producto.ofertaMasBarato > 0">
+            <strong>&nbsp;{{ producto.precioMasBarato | currency:'CLP':'symbol':'1.0-0' }} (¡Oferta!)</strong>
+          </span>
+          <span *ngIf="producto.ofertaMasBarato === 0">
+            {{ producto.precioMasBarato | currency:'CLP':'symbol':'1.0-0' }}
+          </span>
+        </p>
+        <p><strong>Tienda:</strong> {{ producto.nombreTiendaMasBarata }}</p>
+        <p>
+          <strong>Fecha del Precio:</strong>
+          {{ producto.fechaPrecioMasBarato | date:'shortDate' }}
+        </p>
+        <p><a [href]="producto.linkPaginaTiendaMasBarata" target="_blank">Visitar Tienda ({{ producto.nombreTiendaMasBarata }})</a></p>
+      </div>
+      <ng-template #noOferta>
+        <p>No se encontró información de precio disponible para este producto.</p>
+      </ng-template>
+
+      <ion-item-divider class="ion-margin-top">
+        <ion-label>Ver Precio Actual por Tienda</ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label position="stacked">Seleccionar Tienda</ion-label>
+        <ion-select
+          placeholder="Elige una tienda"
+          [(ngModel)]="selectedTiendaPrecioActualId"
+          (ionChange)="onTiendaPrecioActualChange()"
+          [disabled]="tiendasProducto.length === 0"
+        >
+          <ion-select-option *ngFor="let tienda of tiendasProducto" [value]="tienda.idTienda">
+            {{ tienda.nombreTienda }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div *ngIf="precioActualTiendaSeleccionada">
+        <ion-card class="ion-margin-top">
           <ion-card-content>
-            <p><strong>Store_1</strong> &nbsp; <ion-icon name="star" color="warning"></ion-icon> 4.8</p>
-            <p><del>$400.00</del> &nbsp; <strong>$199.00</strong></p>
+            <p><strong>Tienda:</strong> {{ precioActualTiendaSeleccionada.nombreTienda }}</p>
+            <p>
+              <strong>Precio Actual:</strong>
+              <span *ngIf="precioActualTiendaSeleccionada.oferta > 0">
+                <del>{{ precioActualTiendaSeleccionada.precio | currency:'CLP':'symbol':'1.0-0' }}</del>
+                <strong>&nbsp;¡Oferta!</strong>
+              </span>
+              <span *ngIf="precioActualTiendaSeleccionada.oferta === 0">
+                {{ precioActualTiendaSeleccionada.precio | currency:'CLP':'symbol':'1.0-0' }}
+              </span>
+            </p>
+            <p>
+              <strong>Fecha del Precio:</strong>
+              {{ precioActualTiendaSeleccionada.fechaPrecio | date:'shortDate' }}
+            </p>
+            <p><a [href]="precioActualTiendaSeleccionada.linkTienda" target="_blank">Visitar Tienda</a></p>
           </ion-card-content>
         </ion-card>
-        <ion-card>
-          <ion-card-content>
-            <p><strong>Store_2</strong> &nbsp; <ion-icon name="star" color="warning"></ion-icon> 4.8</p>
-            <p><del>$400.00</del> &nbsp; <strong>$299.00</strong></p>
-          </ion-card-content>
-        </ion-card>
+      </div>
+      <p *ngIf="!precioActualTiendaSeleccionada && selectedTiendaPrecioActualId !== null" class="ion-padding-start">
+        No se encontró información de precio para la tienda seleccionada.
+      </p>
+      <p *ngIf="tiendasProducto.length === 0" class="ion-padding-start">
+        Este producto no está disponible en otras tiendas o no se encontró información.
+      </p>
+    </ion-card-content>
+  </ion-card>
 
-        <!-- Wishlist -->
-        <ion-button expand="block" fill="outline">
-          <ion-icon name="heart-outline"></ion-icon> &nbsp; Wishlist
-        </ion-button>
+  <ion-item-divider class="ion-margin-top">
+    <ion-label>Historial de Precios por Tienda</ion-label>
+  </ion-item-divider>
 
-        <!-- Detalles SKU -->
-        <ion-grid>
-          <ion-row>
-            <ion-col size="6"><strong>SKU</strong><br />1117</ion-col>
-            <ion-col size="6"><strong>Category</strong><br />Living Room, Bedroom</ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-item>
+    <ion-label position="stacked">Seleccionar Tienda para Historial</ion-label>
+    <ion-select
+      placeholder="Elige una tienda para el historial"
+      [(ngModel)]="selectedTiendaHistorialId"
+      (ionChange)="onTiendaHistorialChange()"
+      [disabled]="tiendasProducto.length === 0"
+    >
+      <ion-select-option *ngFor="let tienda of tiendasProducto" [value]="tienda.idTienda">
+        {{ tienda.nombreTienda }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
 
-  <!-- Gráfico de precio -->
-  <div class="chart-section">
-    <h2 class="ion-text-center">Price over time</h2>
-    <ion-img src="assets/img/price-chart-placeholder.png"></ion-img>
-  </div>
-
-  <!-- Comentarios -->
-  <ion-segment value="reviews">
-    <ion-segment-button value="info">Additional Info</ion-segment-button>
-    <ion-segment-button value="reviews">Reviews</ion-segment-button>
-  </ion-segment>
-
-  <ion-textarea placeholder="Add a comment..."></ion-textarea>
-  <ion-button expand="block">Post</ion-button>
-
-  <!-- Lista de Reviews -->
-  <ion-list>
-    <ion-item-divider>
-      <ion-label>11 Reviews</ion-label>
-      <ion-select placeholder="Newest">
-        <ion-select-option value="newest">Newest</ion-select-option>
-        <ion-select-option value="oldest">Oldest</ion-select-option>
-      </ion-select>
-    </ion-item-divider>
-
-    <ion-item *ngFor="let user of [1,2,3,4,5]">
+  <ion-list *ngIf="historial.length > 0; else sinHistorial">
+    <ion-list-header>
+      <ion-label>Historial de precios ({{ historial[0]?.nombreTienda || 'Tienda' }})</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let h of historial">
       <ion-label>
-        <h3>User_{{ user }}</h3>
-        <p>★★★★★</p>
-        <p>I bought it 3 weeks ago and now come back just to say "Awesome Product"! I really enjoy it. At vero eos et accusamus et iusto odio dignissimos ducimus...</p>
+        <h3>Fecha: {{ h.fecha | date:'shortDate' }}</h3>
+        <p>
+          Precio:
+          <span *ngIf="h.oferta > 0">
+            <del>{{ h.precio | currency:'CLP':'symbol':'1.0-0' }}</del>
+            <strong>&nbsp;Oferta!</strong>
+          </span>
+          <span *ngIf="h.oferta === 0">
+            {{ h.precio | currency:'CLP':'symbol':'1.0-0' }}
+          </span>
+        </p>
       </ion-label>
     </ion-item>
   </ion-list>
 
-  <ion-button expand="block" fill="outline">Load more</ion-button>
+  <ng-template #sinHistorial>
+    <p class="ion-padding">No hay historial de precios para la tienda seleccionada o el producto.</p>
+  </ng-template>
+
+ <ion-item-divider class="ion-margin-top">
+    <ion-label>Comentarios y Reseñas</ion-label>
+  </ion-item-divider>
+
+  <ion-list *ngIf="resenas.length > 0; else noResenas">
+    <ion-item *ngFor="let resena of resenas">
+      <ion-label>
+        <h3>{{ resena.nombreUsuario }}</h3>
+        <p>Valoración: ⭐ {{ resena.valoracionResena }}</p>
+        <p>{{ resena.comentario }}</p> </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #noResenas>
+    <p class="ion-padding no-resenas-message">Este producto aún no tiene comentarios ni reseñas.</p>
+  </ng-template>
 
 </ion-content>
+
+<ng-template #cargando>
+  <ion-content class="ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando producto...</p>
+  </ion-content>
+</ng-template>

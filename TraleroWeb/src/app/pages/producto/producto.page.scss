@@ -1,3 +1,70 @@
-html, body, ion-app, ion-router-outlet {
-  height: 100%;
+/* src/app/pages/producto/producto.page.scss */
+
+// Estilos para la imagen del producto
+.product-image {
+  display: block; // Asegura que se comporte como un bloque y el margin auto funcione
+  margin: 20px auto; // Centra la imagen horizontalmente y añade margen superior/inferior
+  max-width: 90%; // Ocupa como máximo el 90% del ancho del contenedor
+  height: 500px; // **AJUSTADO: Altura fija de la imagen, más pequeña**
+  object-fit: contain; // Mantiene la proporción de la imagen, escalándola para que quepa completamente.
+  border-radius: 8px; // Suaviza las esquinas de la imagen
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Una sombra sutil para darle profundidad
+}
+
+// Estilos para la tarjeta del producto (solo si no la tenías ya o quieres ajustarla)
+ion-card {
+  margin: 0 16px 20px 16px; // Márgenes para separarla de los bordes y de lo de abajo
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); // Una sombra más pronunciada para la tarjeta
+}
+
+// Ajustes para los divisores de item
+ion-item-divider {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  --background: var(--ion-color-light, #f4f5f8); // Un fondo ligero para el divisor
+  color: var(--ion-color-medium, #92949c); // Un color de texto más suave
+}
+
+// Estilos para la lista de reseñas
+ion-list {
+  &.resenas-list { /* Esta clase es opcional si solo tienes una lista */
+    margin-top: 10px;
+  }
+
+  ion-item {
+    --border-color: var(--ion-color-light, #f4f5f8); // Borde suave entre reseñas
+    --inner-border-width: 0 0 1px 0; // Solo un borde inferior
+    padding-bottom: 5px; // Espacio debajo de cada reseña
+    &:last-child {
+      --inner-border-width: 0; // Sin borde en la última reseña
+    }
+
+    ion-label {
+      h3 {
+        font-weight: bold;
+        color: var(--ion-color-dark, #222428);
+        margin-bottom: 5px;
+      }
+      p {
+        font-size: 0.9em;
+        color: var(--ion-color-medium, #92949c); // Color de texto para la reseña
+        margin-bottom: 3px;
+      }
+      p:last-child {
+        margin-bottom: 0; // Elimina el margen inferior del último párrafo en la reseña
+      }
+      p strong {
+        color: var(--ion-color-primary); // Para resaltar la valoración si es necesario
+      }
+    }
+  }
+}
+
+// Estilo para el texto cuando no hay reseñas (también puedes usar esta clase para sinHistorial)
+.no-resenas-message {
+  padding: 16px;
+  text-align: center;
+  color: var(--ion-color-medium, #92949c);
+  font-style: italic;
 }

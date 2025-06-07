@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { HomePage } from './pages/home/home.page';
-import { BuscarProductoPage } from './pages/buscar-producto/buscar-producto.page';
-import { CategoriasPage } from './pages/categorias/categorias.page';
-import { TiendasPage } from './pages/tiendas/tiendas.page';
 
 const routes: Routes = [
   {
@@ -34,17 +30,15 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'producto',
+    path: 'producto/:id', // ¡ESTA ES LA LÍNEA CORREGIDA!
     loadChildren: () => import('./pages/producto/producto.module').then( m => m.ProductoPageModule)
   },
-
-
-
 ];
 
 @NgModule({

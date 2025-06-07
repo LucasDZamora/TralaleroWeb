@@ -7,13 +7,30 @@ import { Producto } from '../models/producto';
   providedIn: 'root'
 })
 export class ProductoService {
+  private baseUrl = 'http://localhost:3000/api/productos';
 
-  constructor(private http: HttpClient) {}
-  private API_URL = 'http://localhost:3000/api/productos';
+  constructor(private http: HttpClient) { }
 
-  
+  buscarProductos(nombre: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/buscar?nombre=${nombre}`);
+  }
 
-  buscarProductos(nombre: string): Observable<Producto[]> {
-    return this.http.get<Producto[]>(`${this.API_URL}/buscar?nombre=${nombre}`);
+  obtenerProductoPorId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
+  }
+
+  obtenerHistorialPrecios(idProducto: number, tiendaId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/${idProducto}/historial?tiendaId=${tiendaId}`);
+  }
+
+  obtenerTiendasYPreciosActuales(idProducto: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/${idProducto}/tiendas-precios-actuales`);
+  }
+
+  // ***********************************************************************************
+  // NUEVO MÉTODO: Para obtener las reseñas de un producto
+  // ***********************************************************************************
+  obtenerResenasProducto(idProducto: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/${idProducto}/resenas`);
   }
 }

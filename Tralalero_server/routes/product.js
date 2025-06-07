@@ -11,4 +11,9 @@ router.get('/:id/historial', productController.obtenerHistorialPrecios);
 // /api/productos/:id
 router.get('/:id', productController.obtenerProductoPorId);
 
+// /api/productos/:id/tiendas-precios-actuales
+router.get('/:id/tiendas-precios-actuales', productController.obtenerTiendasYPreciosProducto);
+
+router.get('/:id/resenas', productController.obtenerResenasProducto);
+
 module.exports = router;

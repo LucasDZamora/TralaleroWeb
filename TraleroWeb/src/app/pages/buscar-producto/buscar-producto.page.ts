@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductoService } from 'src/app/services/producto.service';
 import { Producto } from 'src/app/models/producto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-buscar-producto',
   templateUrl: './buscar-producto.page.html',
   styleUrls: ['./buscar-producto.page.scss'],
+  
   standalone: false,
 })
 export class BuscarProductoPage implements OnInit {
@@ -23,7 +25,8 @@ export class BuscarProductoPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productoService: ProductoService
+    private productoService: ProductoService,
+    private router: Router 
   ) {}
 
   ngOnInit() {
@@ -66,4 +69,11 @@ export class BuscarProductoPage implements OnInit {
 
     this.ordenarProductos();
   }
+
+  verProducto(id: number) {
+    this.router.navigate(['/producto', id]);
+  }
+
+  
+
 }

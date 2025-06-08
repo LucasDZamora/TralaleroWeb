@@ -28,6 +28,14 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.isLoggedIn = false;
+    this.nombreUsuario = '';
+    this.router.navigate(['/login']);
+  }
+
   @Input() placeholderText: string = 'Search'; 
   @Output() searchEvent = new EventEmitter<string>(); 
 

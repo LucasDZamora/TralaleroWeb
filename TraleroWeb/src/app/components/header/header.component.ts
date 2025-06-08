@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,7 +7,26 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
   standalone: false
 })
-export class HeaderComponent{
+export class HeaderComponent implements OnInit {
+
+  isLoggedIn: boolean = false;
+  nombreUsuario: string = '';
+
+  ngOnInit() {
+    this.checkLoginStatus();
+  }
+
+    checkLoginStatus() {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+
+    this.isLoggedIn = !!token;
+
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      this.nombreUsuario = parsedUser.nombre || 'Usuario';
+    }
+  }
 
   @Input() placeholderText: string = 'Search'; 
   @Output() searchEvent = new EventEmitter<string>(); 

@@ -12,29 +12,46 @@
     ></ion-searchbar>
 
     <ion-buttons slot="end">
-      <div class="nav-buttons">
+      <div class="nav-buttons" *ngIf="!isLoggedIn">
         <ion-button routerLink="/home" class="nav-btn">Inicio</ion-button>
-        <ion-button class="nav-btn">Ofertas</ion-button>
-        <ion-button routerLink="/categorias" class="nav-btn">Categorías</ion-button>
         <ion-button routerLink="/tiendas" class="nav-btn">Tiendas</ion-button>
         <ion-button routerLink="/login" class="login-btn">Iniciar sesión</ion-button>
         <ion-button routerLink="/register" class="register-btn">Registrarse</ion-button>
       </div>
+
+      <div class="nav-buttons" *ngIf="isLoggedIn">
+        <ion-button routerLink="/home" class="nav-btn">Inicio</ion-button>
+        <ion-button routerLink="/tiendas" class="nav-btn">Tiendas</ion-button>
+        <ion-icon name="notifications-outline" size="large" class="icon-btn"></ion-icon>
+        <span class="username">{{ nombreUsuario }}</span>
+        <ion-icon name="settings-outline" size="large" class="icon-btn"></ion-icon>
+      </div>
+
       <ion-menu-button class="menu-button" menu="first"></ion-menu-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <!-- Menú hamburguesa -->
-<ion-menu side="start" menuId="first" contentId="main-content">
+<ion-menu side="start" menuId="first" contentId="main-content" swipeGesture="false">
   <ion-content class="menu-content">
     <div class="menu-header">
       <h2>Menú</h2>
     </div>
 
-    <div class="menu-login">
-      <span routerLink="/login" routerLinkActive="active-menu-item" [routerLinkActiveOptions]="{ exact: true }">Iniciar sesión</span>
+    <div class="menu-login" *ngIf="!isLoggedIn">
+      <span routerLink="/login" routerLinkActive="active-menu-item" [routerLinkActiveOptions]="{ exact: true }">
+        Iniciar sesión
+      </span>
       <ion-icon name="chevron-forward-outline" routerLink="/login"></ion-icon>
+    </div>
+
+    <div class="menu-login" *ngIf="isLoggedIn">
+      <span class="menu-username">
+        {{ nombreUsuario }}
+      </span>
+      <ion-icon name="notifications-outline" size="large" class="icon-btn"></ion-icon>
     </div>
 
     <ion-item lines="full" class="divider"></ion-item>
@@ -51,18 +68,18 @@
     <ion-icon slot="start" name="grid-outline"></ion-icon>
     Inicio
   </ion-item>
-  <ion-item routerLink="/register" routerLinkActive="active-menu-item" [routerLinkActiveOptions]="{ exact: true }">
+
+  <ion-item *ngIf="!isLoggedIn" routerLink="/register" routerLinkActive="active-menu-item" [routerLinkActiveOptions]="{ exact: true }">
     <ion-icon slot="start" name="people-outline" class="mirror-icon"></ion-icon>
     Registrarse
   </ion-item>
-  <ion-item routerLink="/ofertas" routerLinkActive="active-menu-item" [routerLinkActiveOptions]="{ exact: true }">
-    <ion-icon slot="start" name="pricetag-outline" class="mirror-icon"></ion-icon>
-    Ofertas
+
+
+  <ion-item *ngIf="isLoggedIn" routerLink="/cuenta" routerLinkActive="active-menu-item" [routerLinkActiveOptions]="{ exact: true }">
+    <ion-icon slot="start" name="people-outline" class="mirror-icon"></ion-icon>
+    Cuenta
   </ion-item>
-  <ion-item routerLink="/categorias" routerLinkActive="active-menu-item" [routerLinkActiveOptions]="{ exact: true }">
-    <ion-icon slot="start" name="list-outline"></ion-icon>
-    Categorías
-  </ion-item>
+
   <ion-item routerLink="/tiendas" routerLinkActive="active-menu-item" [routerLinkActiveOptions]="{ exact: true }">
     <ion-icon slot="start" name="storefront-outline"></ion-icon>
     Tiendas

@@ -16,7 +16,9 @@ router.get('/:id/tiendas-precios-actuales', productController.obtenerTiendasYPre
 
 router.get('/:id/resenas', productController.obtenerResenasProducto);
 
-// Ruta para productos home
+router.post('/resena', productController.agregarResenaProducto);
+
 router.get('/home', productController.buscarProductoHome);
+
 
 module.exports = router;

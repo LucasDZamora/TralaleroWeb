@@ -30,10 +30,12 @@ export class ProductoService {
     return this.http.get<any[]>('/api/productos/home');
   }
 
-  // ***********************************************************************************
-  // NUEVO MÉTODO: Para obtener las reseñas de un producto
-  // ***********************************************************************************
   obtenerResenasProducto(idProducto: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/${idProducto}/resenas`);
   }
+
+  agregarResenaProducto(resena: {idProducto: number, idUsuario: number, resena: string, valoracion: number}): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/resena`, resena);
+  }
+
 }

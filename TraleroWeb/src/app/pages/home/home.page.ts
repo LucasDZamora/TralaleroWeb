@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductoService } from '../../services/producto.service';
 
 @Component({
   selector: 'app-home',
@@ -6,60 +7,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.page.scss'],
   standalone: false
 })
-export class HomePage {
-  products = [
-    {
-      name: 'Producto 1',
-      price: 198.00,
-      oldPrice: 400.00,
-      discount: 50,
-      isNew: true
-    },
-    {
-      name: 'Producto 2',
-      price: 24.99,
-      oldPrice: 49.99,
-      discount: 50,
-      isNew: true
-    },
-    {
-      name: 'Producto 3',
-      price: 24.99,
-      oldPrice: null,
-      discount: 0,
-      isNew: false
-    },
-    {
-      name: 'Producto 4',
-      price: 224.99,
-      oldPrice: 299.99,
-      discount: 25,
-      isNew: true
-    },
-    {
-      name: 'Producto 5',
-      price: 24.99,
-      oldPrice: null,
-      discount: 0,
-      isNew: false
-    },
-    {
-      name: 'Producto 6',
-      price: 24.99,
-      oldPrice: 49.99,
-      discount: 50,
-      isNew: true
-    }
-  ];
-
+export class HomePage implements OnInit {
+  products: any[] = [];
   discounts = [
     { amount: 50 },
     { amount: 70 },
     { amount: 80 }
   ];
 
-  // Función para obtener siempre la misma imagen
-  getProductImage(): string {
-    return 'assets/images/tralalero-tralala.jpg';
+  constructor(private productoService: ProductoService) {}
+
+  ngOnInit() {
+    this.productoService.buscarProductosHome().subscribe({
+      next: (resp) => {
+        this.products = resp;
+        console.log('Productos cargados:', this.products);
+      },
+      error: (err) => {
+        console.error('Error al cargar productos:', err);
+      }
+    });
+  }
+
+  getProductImage(product: any): string {
+    return product.imagen ? product.imagen : 'assets/images/default-product.png';
   }
 }

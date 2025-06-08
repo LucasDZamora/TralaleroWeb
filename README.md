@@ -86,13 +86,17 @@
 
 Archivo: **Tralalero_server/index.js**
 
+```
 app.use('/api/productos', productRoutes);
+```
 
 Archivo: **Tralalero_server/routes/product.js**
 
-router.get('/buscar', productController.buscarProductos);
+```
+router.get('/:id', productController.obtenerProductoPorId);
+```
 
-Por lo tanto, una ruta para acceder a un producto por su ID podría tener la siguiente forma:
+Por lo tanto, una ruta para acceder a un producto por su ID va a tener la siguiente forma:
 
 /api/productos/:id
 

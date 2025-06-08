@@ -16,4 +16,6 @@ router.get('/:id/tiendas-precios-actuales', productController.obtenerTiendasYPre
 
 router.get('/:id/resenas', productController.obtenerResenasProducto);
 
+router.post('/resena', productController.agregarResenaProducto);
+
 module.exports = router;

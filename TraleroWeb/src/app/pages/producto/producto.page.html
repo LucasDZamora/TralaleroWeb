@@ -141,7 +141,7 @@
     <p class="ion-padding">No hay historial de precios para la tienda seleccionada o el producto.</p>
   </ng-template>
 
- <ion-item-divider class="ion-margin-top">
+  <ion-item-divider class="ion-margin-top">
     <ion-label>Comentarios y Reseñas</ion-label>
   </ion-item-divider>
 
@@ -149,14 +149,56 @@
     <ion-item *ngFor="let resena of resenas">
       <ion-label>
         <h3>{{ resena.nombreUsuario }}</h3>
-        <p>Valoración: ⭐ {{ resena.valoracionResena }}</p>
-        <p>{{ resena.comentario }}</p> </ion-label>
+        <p>
+          Valoración:
+          <span *ngFor="let star of [].constructor(resena.valoracionResena)">⭐</span>
+          ({{ resena.valoracionResena }})
+        </p>
+        <p>{{ resena.comentario }}</p>
+      </ion-label>
     </ion-item>
   </ion-list>
 
   <ng-template #noResenas>
     <p class="ion-padding no-resenas-message">Este producto aún no tiene comentarios ni reseñas.</p>
   </ng-template>
+
+  <!-- Formulario para agregar reseña si el usuario está autenticado -->
+  <ng-container *ngIf="usuarioAutenticado">
+    <ion-item-divider class="ion-margin-top">
+      <ion-label>Agregar una Reseña</ion-label>
+    </ion-item-divider>
+
+    <ion-card>
+      <ion-card-content>
+        <form (ngSubmit)="agregarResena()">
+          <ion-item>
+            <ion-label position="stacked">Valoración</ion-label>
+            <ion-select [(ngModel)]="nuevaValoracion" name="valoracion" required interface="popover">
+              <ion-select-option *ngFor="let val of [5,4,3,2,1]" [value]="val">
+                {{ '⭐'.repeat(val) }} ({{ val }})
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Comentario</ion-label>
+            <ion-textarea [(ngModel)]="nuevoComentario" name="comentario" required
+              placeholder="Escribe tu opinión sobre el producto...">
+            </ion-textarea>
+          </ion-item>
+
+          <ion-button expand="block" type="submit" class="ion-margin-top">
+            Enviar Reseña
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <ng-container *ngIf="!usuarioAutenticado">
+    <p class="ion-padding">Inicia sesión para agregar una reseña.</p>
+  </ng-container>
 
 </ion-content>
 

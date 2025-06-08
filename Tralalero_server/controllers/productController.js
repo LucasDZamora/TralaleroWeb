@@ -25,6 +25,27 @@ exports.buscarProductos = (req, res) => {
   );
 };
 
+exports.agregarResenaProducto = (req, res) => {
+  const { idProducto, idUsuario, resena, valoracion } = req.body;
+
+  if (!idProducto || !idUsuario || !resena || valoracion === undefined) {
+    return res.status(400).json({ error: 'Faltan campos obligatorios' });
+  }
+
+  const sql = `
+    INSERT INTO reseñaproducto (idProducto, idUsuario, reseña, valoración)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  db.query(sql, [idProducto, idUsuario, resena, valoracion], (err, result) => {
+    if (err) {
+      console.error('Error al insertar la reseña:', err);
+      return res.status(500).json({ error: 'Error al guardar la reseña' });
+    }
+
+    res.status(201).json({ message: 'Reseña agregada exitosamente', idResena: result.insertId });
+  });
+};
 
 exports.obtenerProductoPorId = (req, res) => {
   const { id } = req.params;
@@ -141,9 +162,6 @@ exports.obtenerHistorialPrecios = (req, res) => {
   });
 };
 
-// ***********************************************************************************
-// NUEVO MÉTODO: Obtener todas las tiendas y precios actuales para un producto
-// ***********************************************************************************
 exports.obtenerTiendasYPreciosProducto = (req, res) => {
   const { id } = req.params; // idProducto
 

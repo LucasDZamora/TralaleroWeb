@@ -18,6 +18,7 @@
    - [Requerimientos No Funcionales](#requerimientos-no-funcionales)
 3. [Arquitectura de la Información](#arquitectura-de-la-información)
 4. [Diseño de Prototipos](#diseño-de-prototipos)
+5. [Demostracion de funcionamiento de las APIs con POSTMAN](#demostracion-de-funcionamiento-de-las-apis-con-postman)
 5. [Definición de Navegación y UX](#definición-de-navegación-y-ux)
 6. [Principios de Diseño UX](#principios-de-diseño-ux)
 7. [Seguridad de Contraseñas](#seguridad-de-contraseñas)
@@ -78,6 +79,27 @@
 * Ver diseño completo en [Figma](https://www.figma.com/design/27nvS768OmbEAa1kWNkBae/Solotodo?node-id=176-10268&t=Q1tA8qiBHgqHZT0g-1)
 
 ---
+
+## Demostracion de funcionamiento de las APIs con POSTMAN
+
+* Las APIs están definidas inicialmente en Tralalero_server/index.js y luego separadas en la carpeta Tralalero_server/routes. Por ejemplo, si se desea utilizar una API para mostrar la información de un producto, el flujo sería el siguiente:
+
+Archivo: **Tralalero_server/index.js**
+   app.use('/api/productos', productRoutes);
+
+Archivo: **Tralalero_server/routes/product.js**
+   router.get('/buscar', productController.buscarProductos);
+
+Por lo tanto, una ruta para acceder a un producto por su ID podría tener la siguiente forma:
+
+/api/productos/:id
+
+A continuación, se muestra una imagen en POSTMAN que demuestra el funcionamiento de esta API:
+
+   ![alt text](image.png)
+
+---
+
 
 ## Definición de Navegación y UX
 

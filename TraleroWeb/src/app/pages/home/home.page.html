@@ -10,31 +10,41 @@
     </ion-row>
   </ion-grid>
 
+  <!-- Grilla de productos -->
   <ion-grid class="productos-grid">
     <ion-row class="productos-row ion-nowrap">
-      <ion-col *ngFor="let product of products" class="producto-col">
+      <ion-col *ngFor="let product of products" size="6" size-md="4" size-lg="3" class="producto-col">
         <ion-card class="producto-card">
           <div class="card-image-container">
             <ion-badge *ngIf="product.isNew" color="danger" class="badge-new">NEW</ion-badge>
-            <ion-badge *ngIf="product.discount > 0" color="success" class="badge-discount">
-              -{{product.discount}}%
+            <ion-badge *ngIf="product.discount && product.discount > 0" color="success" class="badge-discount">
+              -{{ product.discount }}%
             </ion-badge>
-            <img [src]="getProductImage()" class="producto-img" />
+            <img [src]="getProductImage(product)" class="producto-img" />
           </div>
 
           <ion-card-content>
             <div class="estrellas">★★★★★</div>
-            <ion-label class="producto-nombre">{{product.name}}</ion-label>
+            <ion-label class="producto-nombre">{{ product.nombre || product.name }}</ion-label>
             <div class="precio-container">
               <ion-text *ngIf="product.oldPrice" class="precio-antiguo">
-                ${{product.oldPrice | number:'1.2-2'}}
+                ${{ product.oldPrice | number:'1.0-0' }}
               </ion-text>
               <ion-text color="danger" class="precio-actual">
-                ${{product.price | number:'1.2-2'}}
+                ${{ product.precio || product.price | number:'1.0-0' }}
               </ion-text>
             </div>
           </ion-card-content>
         </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <!-- Fallback si no hay productos -->
+    <ion-row *ngIf="products.length === 0" class="ion-justify-content-center ion-padding">
+      <ion-col size="12" class="ion-text-center">
+        <ion-text color="medium">
+          <p>No hay productos disponibles.</p>
+        </ion-text>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -43,11 +53,10 @@
     <h2 class="descuentos-title">Descuentos</h2>
   </section>
 
-  <!-- Sección descuentos -->
   <ion-list class="lista-descuentos">
     <ion-item *ngFor="let discount of discounts" lines="none" class="item-descuento">
       <ion-label class="ion-text-center">
-        <h2>HASTA {{discount.amount}}% DE DESCUENTO</h2>
+        <h2>HASTA {{ discount.amount }}% DE DESCUENTO</h2>
         <p>SUPER OFERTA</p>
         <ion-button fill="outline" class="btn-ver">Ver ahora</ion-button>
       </ion-label>

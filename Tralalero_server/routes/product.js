@@ -8,6 +8,8 @@ router.get('/buscar', productController.buscarProductos);
 // /api/productos/:id/historial?tiendaId=#
 router.get('/:id/historial', productController.obtenerHistorialPrecios);
 
+router.get('/home', productController.buscarProductoHome);
+
 // /api/productos/:id
 router.get('/:id', productController.obtenerProductoPorId);
 
@@ -18,7 +20,6 @@ router.get('/:id/resenas', productController.obtenerResenasProducto);
 
 router.post('/resena', productController.agregarResenaProducto);
 
-router.get('/home', productController.buscarProductoHome);
 
 
 module.exports = router;

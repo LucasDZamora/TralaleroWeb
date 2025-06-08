@@ -49,23 +49,38 @@ exports.agregarResenaProducto = (req, res) => {
 
 exports.buscarProductoHome = (req, res) => {
   const query = `
-    SELECT  nombre, imagen
-    FROM producto
+    SELECT 
+      p.idProducto,
+      p.nombre, 
+      p.imagen, 
+      p.valoracion, 
+      pt.precio
+    FROM producto p
+    JOIN (
+      SELECT idProducto, MAX(fecha) AS fechaReciente
+      FROM ProductosTienda
+      GROUP BY idProducto
+    ) AS ultimos ON p.idProducto = ultimos.idProducto
+    JOIN ProductosTienda pt 
+      ON pt.idProducto = ultimos.idProducto AND pt.fecha = ultimos.fechaReciente
+    ORDER BY ultimos.fechaReciente DESC
+    LIMIT 5;
   `;
 
   db.query(query, (err, results) => {
     if (err) {
-      console.error('Error al obtener productos:', err);
-      return res.status(500).json({ error: 'Error al obtener productos' });
+      console.error('Error al obtener productos recientes:', err);
+      return res.status(500).json({ error: 'Error al obtener productos recientes' });
     }
 
     if (results.length === 0) {
-      return res.status(404).json({ message: 'No se encontraron productos' });
+      return res.status(404).json({ message: 'No se encontraron productos recientes' });
     }
 
     res.json(results);
   });
 };
+
 
 exports.obtenerProductoPorId = (req, res) => {
   const { id } = req.params;

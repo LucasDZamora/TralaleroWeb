@@ -14,24 +14,32 @@
   <ion-grid class="productos-grid">
     <ion-row class="productos-row ion-nowrap">
       <ion-col *ngFor="let product of products" size="6" size-md="4" size-lg="3" class="producto-col">
-        <ion-card class="producto-card">
+        <ion-card class="producto-card" (click)="verProducto(product.idProducto)">
           <div class="card-image-container">
+            <img [src]="product.imagen" alt="{{ product.nombre }}" />
             <ion-badge *ngIf="product.isNew" color="danger" class="badge-new">NEW</ion-badge>
             <ion-badge *ngIf="product.discount && product.discount > 0" color="success" class="badge-discount">
               -{{ product.discount }}%
             </ion-badge>
-            <img [src]="getProductImage(product)" class="producto-img" />
           </div>
 
           <ion-card-content>
-            <div class="estrellas">★★★★★</div>
-            <ion-label class="producto-nombre">{{ product.nombre || product.name }}</ion-label>
+            <div class="estrellas">
+              <span *ngFor="let i of [1,2,3,4,5]">
+                <ion-icon
+                  [name]="i <= product.valoracion ? 'star' : 'star-outline'"
+                  color="warning">
+                </ion-icon>
+              </span>
+            </div>
+
+            <ion-label class="producto-nombre">{{ product.nombre }}</ion-label>
             <div class="precio-container">
               <ion-text *ngIf="product.oldPrice" class="precio-antiguo">
                 ${{ product.oldPrice | number:'1.0-0' }}
               </ion-text>
               <ion-text color="danger" class="precio-actual">
-                ${{ product.precio || product.price | number:'1.0-0' }}
+                ${{ product.precio | number:'1.0-0' }}
               </ion-text>
             </div>
           </ion-card-content>
@@ -49,6 +57,7 @@
     </ion-row>
   </ion-grid>
 
+  <!-- Sección de descuentos -->
   <section class="descuentos-section">
     <h2 class="descuentos-title">Descuentos</h2>
   </section>

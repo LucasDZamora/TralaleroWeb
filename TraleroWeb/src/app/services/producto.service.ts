@@ -26,12 +26,13 @@ export class ProductoService {
   obtenerTiendasYPreciosActuales(idProducto: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/${idProducto}/tiendas-precios-actuales`);
   }
-  buscarProductosHome() {
-    return this.http.get<any[]>('/api/productos/home');
-  }
 
   obtenerResenasProducto(idProducto: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/${idProducto}/resenas`);
+  }
+
+  obtenerProductosHome(): Observable<Producto[]> {
+    return this.http.get<Producto[]>(`${this.baseUrl}/home`);
   }
 
   agregarResenaProducto(resena: {idProducto: number, idUsuario: number, resena: string, valoracion: number}): Observable<any> {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../../services/producto.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,21 +16,24 @@ export class HomePage implements OnInit {
     { amount: 80 }
   ];
 
-  constructor(private productoService: ProductoService) {}
+  constructor(private productoService: ProductoService, private router: Router) {}
 
   ngOnInit() {
-    this.productoService.buscarProductosHome().subscribe({
-      next: (resp) => {
-        this.products = resp;
-        console.log('Productos cargados:', this.products);
-      },
-      error: (err) => {
-        console.error('Error al cargar productos:', err);
-      }
-    });
+    this.cargarProductosHome();
   }
 
-  getProductImage(product: any): string {
-    return product.imagen ? product.imagen : 'assets/images/default-product.png';
+  verProducto(id: number) {
+    this.router.navigate(['/producto', id]);
+  }
+
+  cargarProductosHome() {
+    this.productoService.obtenerProductosHome().subscribe({
+      next: (data) => {
+        this.products = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar productos recientes:', err);
+      }
+    });
   }
 }

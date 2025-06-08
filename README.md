@@ -85,10 +85,12 @@
 * Las APIs están definidas inicialmente en Tralalero_server/index.js y luego separadas en la carpeta Tralalero_server/routes. Por ejemplo, si se desea utilizar una API para mostrar la información de un producto, el flujo sería el siguiente:
 
 Archivo: **Tralalero_server/index.js**
-   app.use('/api/productos', productRoutes);
+
+app.use('/api/productos', productRoutes);
 
 Archivo: **Tralalero_server/routes/product.js**
-   router.get('/buscar', productController.buscarProductos);
+
+router.get('/buscar', productController.buscarProductos);
 
 Por lo tanto, una ruta para acceder a un producto por su ID podría tener la siguiente forma:
 

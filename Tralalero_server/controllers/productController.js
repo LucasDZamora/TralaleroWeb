@@ -47,6 +47,26 @@ exports.agregarResenaProducto = (req, res) => {
   });
 };
 
+exports.buscarProductoHome = (req, res) => {
+  const query = `
+    SELECT  nombre, imagen
+    FROM producto
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error al obtener productos:', err);
+      return res.status(500).json({ error: 'Error al obtener productos' });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron productos' });
+    }
+
+    res.json(results);
+  });
+};
+
 exports.obtenerProductoPorId = (req, res) => {
   const { id } = req.params;
 
@@ -240,4 +260,3 @@ exports.obtenerResenasProducto = (req, res) => {
     res.json(results);
   });
 };
-

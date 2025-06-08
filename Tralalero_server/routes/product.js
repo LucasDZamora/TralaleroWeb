@@ -18,4 +18,7 @@ router.get('/:id/resenas', productController.obtenerResenasProducto);
 
 router.post('/resena', productController.agregarResenaProducto);
 
+router.get('/home', productController.buscarProductoHome);
+
+
 module.exports = router;

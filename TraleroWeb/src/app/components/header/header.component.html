@@ -22,6 +22,7 @@
       <div class="nav-buttons" *ngIf="isLoggedIn">
         <ion-button routerLink="/home" class="nav-btn">Inicio</ion-button>
         <ion-button routerLink="/tiendas" class="nav-btn">Tiendas</ion-button>
+        <ion-button (click)="logout()" class="nav-btn">Cerrar sesión</ion-button>
         <ion-icon name="notifications-outline" size="large" class="icon-btn"></ion-icon>
         <span class="username">{{ nombreUsuario }}</span>
         <ion-icon name="settings-outline" size="large" class="icon-btn"></ion-icon>
@@ -83,6 +84,11 @@
   <ion-item routerLink="/tiendas" routerLinkActive="active-menu-item" [routerLinkActiveOptions]="{ exact: true }">
     <ion-icon slot="start" name="storefront-outline"></ion-icon>
     Tiendas
+  </ion-item>
+
+  <ion-item *ngIf="isLoggedIn" button (click)="logout()">
+    <ion-icon slot="start" name="log-out-outline"></ion-icon>
+    Cerrar sesión
   </ion-item>
 </ion-list>
 

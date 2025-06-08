@@ -19,13 +19,13 @@
 3. [Arquitectura de la Información](#arquitectura-de-la-información)
 4. [Diseño de Prototipos](#diseño-de-prototipos)
 5. [Demostracion de funcionamiento de las APIs con POSTMAN](#demostracion-de-funcionamiento-de-las-apis-con-postman)
-5. [Definición de Navegación y UX](#definición-de-navegación-y-ux)
-6. [Principios de Diseño UX](#principios-de-diseño-ux)
-7. [Seguridad de Contraseñas](#seguridad-de-contraseñas)
-8. [Tecnologías](#tecnologías)
-9. [Estructura del Proyecto](#estructura-del-proyecto)
-10. [Funcionalidades Implementadas](#funcionalidades-implementadas)
-11. [Instalación](#instalación)
+6. [Definición de Navegación y UX](#definición-de-navegación-y-ux)
+7. [Principios de Diseño UX](#principios-de-diseño-ux)
+8. [Seguridad de Contraseñas](#seguridad-de-contraseñas)
+9. [Tecnologías](#tecnologías)
+10. [Estructura del Proyecto](#estructura-del-proyecto)
+11. [Funcionalidades Implementadas](#funcionalidades-implementadas)
+12. [Instalación](#instalación)
 
 ---
 

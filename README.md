@@ -208,26 +208,21 @@ Para correr este proyecto en tu máquina local, sigue los siguientes pasos:
 1. Clona este repositorio:
    ```bash
    git clone https://github.com/LucasDZamora/TralaleroWeb.git
-2. Inicia XAMPP:
-   - Abre el panel de control de XAMPP.
-   - Inicia los servicios **Apache** y **MySQL**.
-
-3. Prepara la base de datos:
-   - Abre **phpMyAdmin** en tu navegador (por defecto en http://localhost/phpmyadmin).
+2. Prepara la base de datos:
    - Crea una nueva base de datos llamada `tralaleroweb`.
    - Importa el archivo `tralaleroweb.sql` incluido en el proyecto.  
-4. Iniciar el backend
+3. Iniciar el backend
    ```bash
    cd Tralalero_server
-5. Correr el servidor
+4. Correr el servidor
    ```bash
    node index.js
-6. Navega al directorio frontend del proyecto
+5. Navega al directorio frontend del proyecto
    ```bash
     cd TraleroWeb
-7. Instala las dependencias
+6. Instala las dependencias
    ```bash
     npm install
-8. Corre la aplicación
+7. Corre la aplicación
    ```bash
     ionic serve

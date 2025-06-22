@@ -79,10 +79,18 @@ export class LoginPage {
       },
       error: async (err) => {
         await loading.dismiss();
-
+        let mensaje = 'Error al iniciar sesión';
+      
+        // Comprueba si el error es de rate limit (HTTP 429)
+        if (err.status === 429) {
+          mensaje = err.error?.error || 'Demasiados intentos. Puedes volver a intentarlo en 15 minutos.';
+        } else if (err.error?.error) {
+          mensaje = err.error.error;
+        }
+      
         const toast = await this.toastCtrl.create({
-          message: err.error?.error || 'Error al iniciar sesión',
-          duration: 2500,
+          message: mensaje,
+          duration: 3000,
           color: 'danger'
         });
         await toast.present();

@@ -73,11 +73,11 @@
             <p><strong>Tienda:</strong> {{ precioActualTiendaSeleccionada.nombreTienda }}</p>
             <p>
               <strong>Precio Actual:</strong>
-              <span *ngIf="precioActualTiendaSeleccionada.oferta > 0">
+              <span *ngIf="precioActualTiendaSeleccionada.oferta == true">
                 <del>{{ precioActualTiendaSeleccionada.precio | currency:'CLP':'symbol':'1.0-0' }}</del>
                 <strong>&nbsp;¡Oferta!</strong>
               </span>
-              <span *ngIf="precioActualTiendaSeleccionada.oferta === 0">
+              <span *ngIf="precioActualTiendaSeleccionada.oferta == false">
                 {{ precioActualTiendaSeleccionada.precio | currency:'CLP':'symbol':'1.0-0' }}
               </span>
             </p>
@@ -136,6 +136,15 @@
       </ion-label>
     </ion-item>
   </ion-list>
+  
+  <ion-item-divider class="ion-margin-top">
+  <ion-label>Gráfico histórico</ion-label>
+  </ion-item-divider>
+
+  <div *ngIf="chartUrl">
+    <img [src]="chartUrl" class="ion-margin" />
+  </div>
+
 
   <ng-template #sinHistorial>
     <p class="ion-padding">No hay historial de precios para la tienda seleccionada o el producto.</p>

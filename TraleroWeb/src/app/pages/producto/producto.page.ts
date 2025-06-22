@@ -23,6 +23,9 @@ export class ProductoPage implements OnInit {
   nuevaValoracion: number = 5;
   usuarioAutenticado: any = null;
 
+  // ¡IMPORTANTE! Mover la declaración de chartUrl aquí para que sea una propiedad de la clase.
+  chartUrl: string | null = null; //
+
   constructor(
     private route: ActivatedRoute,
     private productoService: ProductoService
@@ -103,20 +106,38 @@ export class ProductoPage implements OnInit {
         next: (data: any[]) => {
           this.historial = data;
           console.log('Historial de precios recibido para tienda ID', tiendaId, ':', this.historial);
+          // ¡IMPORTANTE! Asignar chartUrl aquí para que el gráfico se muestre al cargar la página.
+          this.productoService.getChartUrl(data.map(h => ({
+            fecha: h.fecha,
+            precio: h.precio
+          }))).subscribe(resp => {
+            this.chartUrl = resp.url;
+            console.log('URL del gráfico generada en cargarHistorial:', this.chartUrl);
+          });
         },
         error: (e: any) => console.error('Error cargando historial de precios:', e)
       });
   }
 
   // Cambio de selección de tienda para historial
-  onTiendaHistorialChange() {
-    if (this.selectedTiendaHistorialId && this.producto.idProducto) {
-      this.cargarHistorial(this.producto.idProducto, this.selectedTiendaHistorialId);
+   onTiendaHistorialChange() {
+    if (this.selectedTiendaHistorialId) {
+      this.productoService.obtenerHistorialPrecios(this.producto.idProducto, this.selectedTiendaHistorialId)
+        .subscribe(hist => {
+          this.historial = hist;
+          this.productoService.getChartUrl(hist.map(h => ({
+            fecha: h.fecha,
+            precio: h.precio
+          }))).subscribe(resp => {
+            this.chartUrl = resp.url;
+            console.log('URL del gráfico generada en onTiendaHistorialChange:', this.chartUrl);
+          });
+        });
     } else {
       this.historial = [];
+      this.chartUrl = null;
     }
   }
-
   // Cambio de tienda para precio actual
   onTiendaPrecioActualChange() {
     if (this.selectedTiendaPrecioActualId) {
@@ -179,5 +200,4 @@ export class ProductoPage implements OnInit {
       }
     });
   }
-
 }

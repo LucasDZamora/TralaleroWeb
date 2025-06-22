@@ -20,6 +20,4 @@ router.get('/:id/resenas', productController.obtenerResenasProducto);
 
 router.post('/resena', productController.agregarResenaProducto);
 
-
-
 module.exports = router;

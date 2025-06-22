@@ -26,6 +26,7 @@ export class RegisterPage implements OnInit {
   aceptaTerminos: boolean = false;
   errorMensaje: string = '';
   rutInvalido: boolean = false;
+  passwordInvalida: boolean = false;
   correoInvalido: boolean = false;
   comunasFiltradas: string[] = [];
 
@@ -105,6 +106,24 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {}
 
+  async presentRutErrorAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'RUT inválido',
+      message: 'El RUT ingresado no tiene el formato válido. Por favor, verifica e intenta nuevamente.',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async presentPasswordErrorAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Contraseña inválida',
+      message: 'La contraseña debe tener al menos 6 caracteres.',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
   async registrar() {
     this.rutInvalido = false;
     this.correoInvalido = false;
@@ -129,7 +148,17 @@ export class RegisterPage implements OnInit {
     if (!this.validarRUT(this.usuario.rut)) {
       this.rutInvalido = true;
       this.errorMensaje = 'El RUT no tiene un formato válido.';
+      // Muestra la alerta personalizada
+      await this.presentRutErrorAlert();
       return;
+    }
+
+    if (this.usuario.contrasena.length < 6) {
+      this.passwordInvalida = true;
+      await this.presentPasswordErrorAlert();
+      return;
+    } else {
+      this.passwordInvalida = false;
     }
 
     if (this.usuario.contrasena !== this.confirmarContrasena) {
@@ -168,7 +197,6 @@ export class RegisterPage implements OnInit {
       }
     );
   }
-
 
   actualizarComunas() {
     const regionSeleccionada = this.regiones.find(r => r.region === this.usuario.region);

@@ -1,6 +1,5 @@
 const { Tienda } = require('../models');
 
-// 1. Obtener nombre de todas las tiendas
 exports.obtenerNombresTiendas = async (req, res) => {
   try {
     const tiendas = await Tienda.findAll({
@@ -13,7 +12,6 @@ exports.obtenerNombresTiendas = async (req, res) => {
   }
 };
 
-// 2. Obtener valoración promedio de cada tienda
 exports.obtenerValoracionesTiendas = async (req, res) => {
   try {
     const tiendas = await Tienda.findAll({
@@ -26,7 +24,6 @@ exports.obtenerValoracionesTiendas = async (req, res) => {
   }
 };
 
-// 3. Obtener resumen: nombre, valoración e imagen de cada tienda
 exports.obtenerResumenTiendas = async (req, res) => {
   try {
     const tiendas = await Tienda.findAll({

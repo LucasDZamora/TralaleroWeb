@@ -85,7 +85,6 @@ exports.buscarProductoHome = async (req, res) => {
   }
 };
 
-
 exports.obtenerProductoPorId = async (req, res) => {
   const { id } = req.params;
   if (!id) return res.status(400).json({ error: 'Falta el parámetro id' });
@@ -110,7 +109,7 @@ exports.obtenerProductoPorId = async (req, res) => {
       valoracionProducto: producto.valoracion,
       link: producto.link,
       precioMasBarato: precioMasBarato?.precio || null,
-      ofertaMasBarato: precioMasBarato?.oferta || null,
+      ofertaMasBarato: precioMasBarato ? (precioMasBarato.oferta ? 1 : 0) : 0,
       nombreTiendaMasBarata: precioMasBarato?.Tienda?.nombre || null,
       idTiendaMasBarata: precioMasBarato?.Tienda?.idTienda || null,
       linkPaginaTiendaMasBarata: precioMasBarato?.Tienda?.linkPagina || null,
@@ -173,19 +172,38 @@ exports.obtenerTiendasYPreciosProducto = async (req, res) => {
         model: Tienda,
         attributes: ['idTienda', 'nombre', 'linkPagina']
       },
-      order: [[Sequelize.col('Tienda.nombre'), 'ASC']]
+      order: [['fecha', 'DESC']]
     });
 
-    const resultado = precios.map(p => ({
-      idTienda: p.Tienda.idTienda,
-      nombreTienda: p.Tienda.nombre,
-      linkTienda: p.Tienda.linkPagina,
-      precio: p.precio,
-      oferta: p.oferta,
-      fechaPrecio: p.fecha
-    }));
+    const tiendasMap = new Map();
 
-    res.json(resultado);
+    for (const p of precios) {
+      const idTienda = p.Tienda.idTienda;
+
+      const nuevaEntrada = {
+        idTienda,
+        nombreTienda: p.Tienda.nombre,
+        linkTienda: p.Tienda.linkPagina,
+        precio: p.precio,
+        oferta: p.oferta ? 1 : 0,
+        fechaPrecio: p.fecha
+      };
+
+      if (!tiendasMap.has(idTienda)) {
+        tiendasMap.set(idTienda, nuevaEntrada);
+      } else {
+        const existente = tiendasMap.get(idTienda);
+        if (new Date(p.fecha) > new Date(existente.fechaPrecio)) {
+          tiendasMap.set(idTienda, nuevaEntrada);
+        }
+      }
+    }
+
+    const resultadoFinal = Array.from(tiendasMap.values()).sort((a, b) =>
+      a.nombreTienda.localeCompare(b.nombreTienda)
+    );
+
+    res.json(resultadoFinal);
   } catch (err) {
     console.error('Error al obtener tiendas y precios:', err);
     res.status(500).json({ error: 'Error al obtener tiendas y precios' });

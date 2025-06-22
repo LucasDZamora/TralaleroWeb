@@ -17,7 +17,7 @@ import { ProductoPage } from './producto.page';
     ProductoPageRoutingModule
   ],
   declarations: [ProductoPage],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]     // 👈 evita NG8001
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]    
 
 })
 export class ProductoPageModule {}

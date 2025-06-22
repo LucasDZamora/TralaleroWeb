@@ -125,11 +125,11 @@
         <h3>Fecha: {{ h.fecha | date:'shortDate' }}</h3>
         <p>
           Precio:
-          <span *ngIf="h.oferta > 0">
+          <span *ngIf="h.oferta == true">
             <del>{{ h.precio | currency:'CLP':'symbol':'1.0-0' }}</del>
             <strong>&nbsp;Oferta!</strong>
           </span>
-          <span *ngIf="h.oferta === 0">
+          <span *ngIf="h.oferta == false">
             {{ h.precio | currency:'CLP':'symbol':'1.0-0' }}
           </span>
         </p>

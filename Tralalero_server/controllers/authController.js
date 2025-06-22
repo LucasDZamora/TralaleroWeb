@@ -5,10 +5,6 @@ const jwt = require('jsonwebtoken');
 exports.register = async (req, res) => {
   const { nombre, correo, contrasena, comuna, region, rut } = req.body;
 
-  if (!nombre || !correo || !contrasena || !comuna || !region || !rut) {
-    return res.status(400).json({ error: 'Faltan campos obligatorios' });
-  }
-
   try {
     const existente = await Usuario.findOne({ where: { correo } });
 
@@ -37,10 +33,6 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { correo, contrasena } = req.body;
-
-  if (!correo || !contrasena) {
-    return res.status(400).json({ error: 'Correo y contraseña son obligatorios' });
-  }
 
   try {
     const user = await Usuario.findOne({ where: { correo } });

@@ -10,8 +10,10 @@ const db = require('./db');
 dotenv.config();
 
 app.use(cors({
-  origin: 'http://localhost:8100', // sin barra final
-  credentials: true
+  origin: 'http://localhost:8100',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json());

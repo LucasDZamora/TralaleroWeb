@@ -53,16 +53,17 @@
 
           <!-- Contraseña -->
           <ion-label class="input-label">Contraseña <span class="required-asterisk">*</span></ion-label>
-          <ion-input
-            type="password"
-            name="contrasena"
-            [(ngModel)]="usuario.contrasena"
-            required
-            #passRef="ngModel"
-            [ngClass]="{'invalid': passRef.invalid && passRef.touched}"
-            placeholder="Contraseña"
+            <ion-input
+              type="password"
+              name="contrasena"
+              [(ngModel)]="usuario.contrasena"
+              required
+              #passRef="ngModel"
+              [ngClass]="{'invalid': (passRef.invalid && passRef.touched) || passwordInvalida}"
+              placeholder="Contraseña"
           ></ion-input>
           <div *ngIf="passRef.invalid && passRef.touched" class="error">Campo obligatorio</div>
+          <div *ngIf="passwordInvalida" class="error">Contraseña inválida: mínimo 6 caracteres</div>
 
           <!-- Términos -->
           <ion-item lines="none">
